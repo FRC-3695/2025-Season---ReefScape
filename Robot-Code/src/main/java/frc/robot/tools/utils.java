@@ -6,11 +6,10 @@ import edu.wpi.first.hal.HALUtil;
 
 public class utils {
     private utils() {}
-    // *************************   Math   *************************
+    // ------------------------------------------------------------------------------------------    Math    ------------------------------------------------------------------------------------------
     public static double map(double x, double in_min, double in_max, double out_min, double out_max) {
         return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
     }
-    // ************************   Logging   ***********************
     static DecimalFormat ft = new DecimalFormat("###0000.000"); 
     public static void Logging(int level, String event) {
         System.out.print("*** ");
@@ -42,6 +41,7 @@ public class utils {
         }
         System.out.println(event);
     }
+    // ---------------------------------------------------------------------------------    RoboRIO Identification    ---------------------------------------------------------------------------------
     public static String RoboRIOid() {
         switch (System.getenv("serialnum")) {
             case "2":
@@ -61,6 +61,7 @@ public class utils {
                 return null;
         }
     }
+    // -------------------------------------------------------------------------------------    RoboRIO Serial    -------------------------------------------------------------------------------------
     public static String RoboRIOSerial() {
         return System.getenv("serialnum");
     }
