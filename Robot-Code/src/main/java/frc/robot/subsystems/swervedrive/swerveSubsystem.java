@@ -42,6 +42,8 @@ import swervelib.SwerveController;
 import swervelib.SwerveDrive;
 import swervelib.SwerveDriveTest;
 import swervelib.math.SwerveMath;
+import swervelib.SwerveModule;
+import swervelib.motors.SwerveMotor;
 import swervelib.parser.SwerveControllerConfiguration;
 import swervelib.parser.SwerveDriveConfiguration;
 import swervelib.parser.SwerveParser;
@@ -346,5 +348,15 @@ public class swerveSubsystem extends SubsystemBase {
     }
     public SwerveDrive getSwerveDrive() {                                                                                               // Gets the swerve drive object.
         return swDrive;
+    }
+     public double SwerveModVoltage_Drive(int module) {                                                                                 // Pulls Voltage from Drive Motor on Select Swerve Module
+        SwerveModule[] modules = swDrive.getModules();                                                                                  // > Looks up module data and stores it to {@param - module}
+        SwerveMotor motor = modules[module].getDriveMotor();                                                                            // > Gets Drive motor from {@param - module} storing SwerveMotor as {@param - motor}
+        return motor.getVoltage();                                                                                                      // > {@param - motor} is pulled to get voltage
+    }
+    public double SwerveModVoltage_Steer(int module) {                                                                                  // Pulls Voltage from Angle Motor on Select Swerve Module
+        SwerveModule[] modules = swDrive.getModules();                                                                                  // > Looks up module data and stores it to {@param - module}
+        SwerveMotor motor = modules[module].getAngleMotor();                                                                            // > Gets Steering motor from {@param - module} storing SwerveMotor as {@param - motor}
+        return motor.getVoltage();                                                                                                      // > {@param - motor} is pulled to get voltage
     }
 }
