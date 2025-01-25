@@ -19,6 +19,7 @@
 >* Algae **Out** `Left Trigger & Right Bumper`
 >* Elevator **Up** `Left Stick X Up`
 >* Elevator **Down** `Left Stick X Down`
+
 **Automated Functions**
 >* Auto Intake `Right Bumper`
 >* Score Tier 4 `Y`
