@@ -12,17 +12,18 @@
 * Center Swerve Modules `Back`
 
 ## Manipulator **Co-Pilot's Position**
-**Manual Function**
->* Coral **In** `Right Stick X Down`
->* Coral **Out** `Right Stick X Up`
->* Algae **In** `Left Trigger`
->* Algae **Out** `Left Trigger & Right Bumper`
->* Elevator **Up** `Left Stick X Up`
->* Elevator **Down** `Left Stick X Down`
 
-**Automated Functions**
->* Auto Intake `Right Bumper`
->* Score Tier 4 `Y`
->* Score Tier 3 `B`
->* Score Tier 2 `A`
->* Score Tier 1 `X`
+### Manual Function
+* Coral **In** `Right Stick X Down`
+* Coral **Out** `Right Stick X Up`
+* Algae **In** `Left Trigger`
+* Algae **Out** `Left Trigger & Right Bumper`
+* Elevator **Up** `Left Stick X Up`
+* Elevator **Down** `Left Stick X Down`
+
+### Automated Functions
+* Auto Intake `Right Bumper`
+* Score Tier 4 `Y`
+* Score Tier 3 `B`
+* Score Tier 2 `A`
+* Score Tier 1 `X`
