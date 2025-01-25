@@ -1,10 +1,10 @@
 package frc.robot.tools;
 import java.text.DecimalFormat;
-
 //WPILib Libraries
 import edu.wpi.first.hal.HALUtil;
 
 public class utils {
+    private static double lastTripRisk;
     private utils() {}
     // ------------------------------------------------------------------------------------------    Math    ------------------------------------------------------------------------------------------
     public static double map(double x, double in_min, double in_max, double out_min, double out_max) {
@@ -64,5 +64,35 @@ public class utils {
     // -------------------------------------------------------------------------------------    RoboRIO Serial    -------------------------------------------------------------------------------------
     public static String RoboRIOSerial() {
         return System.getenv("serialnum");
+    }
+    // -------------------------------------------------------------------------------    Power Reporting Functions    --------------------------------------------------------------------------------
+    public static final class Power {
+        public static void voltageDrop(String name, double supplyVolt, double deviceVolt, double percentLossCritical, double percentLossAlert) {                            // Check the voltage drop betweek given supply and device and using tolerance to identify bad connections
+            String logReport = "";
+            if (deviceVolt/supplyVolt+percentLossCritical < 1) {
+                Logging(5, logReport);
+            } else if (deviceVolt/supplyVolt+percentLossAlert < 1) {
+                Logging(3, logReport);
+            } else {
+                Logging(0, logReport);
+            }
+        }
+        public static void voltageDrop(String name, double supplyVolt, double deviceVolt, double percentLossCritical) {                                                     // Check the voltage drop betweek given supply and device and using tolerance to identify bad connections
+            voltageDrop(name, supplyVolt, deviceVolt, percentLossCritical, 0.5);
+        }
+        public static void amperageCheck(String name, double deviceAmpDraw, double surgeAmps, double criticalAmps, double breakerTrip, double breakerTimeMS) {              // 60amp 1s for 40am
+            if (deviceAmpDraw > criticalAmps) {                                                                                                                             // 
+                Logging(4, name + "is Exceeding Critical Amp(s) \"" + criticalAmps + "\"" + " by drawing : " + deviceAmpDraw + "Amp(s)");
+            } else if (deviceAmpDraw > surgeAmps) {                                                                                                                         //
+                Logging(3, name + "is Exceeding Max Surge Amp(s) \"" + surgeAmps + "\"" + " by drawing : " + deviceAmpDraw + "Amp(s)");
+            } else {                                                                                                                                                        //
+                Logging(0, name + " current draw is (" + deviceAmpDraw + ")Amp(s)");
+            }
+            if (deviceAmpDraw > breakerTrip && lastTripRisk >= breakerTimeMS) {                                                                                             //
+                Logging(4, name + " has reached breaker trip limit of " + breakerTrip + " Amp(s) over " + breakerTimeMS + "ms");
+            } else if (lastTripRisk > 150) {
+                lastTripRisk = System.currentTimeMillis();
+            }
+        }
     }
 }
