@@ -73,37 +73,44 @@ public class Constants {
         public static final int   fused_sw_B_Encoders   = 10;                                                                               //amps, Fused for
         public static final int    port_sw_IMU          = 23;                                                                               // Port on the Power Hub for the CTRE Pigeon2 IMU
         public static final int   fused_sw_IMU          = 5;                                                                                //amps, Fused for
+        public static final class managment{
+            public static final double  sw_vtDrop_tol   = 0.095;                                                                            // Swerve Drive Percent Voltage Drop Tolerated Before Alert
+            public static final double  swD_SurgeAmp    = 50;                                                                               //amps, 
+            public static final double  swD_CritAmp     = 75;                                                                               //amps, 
+            public static final int     swD_BreakAmp    = 60;                                                                               //amps, 
+            public static final double  swD_BreakTime   = 1000;                                                                             //ms, 
+        } 
     }
     public static final class CANnet {                                                                                                      // Can Devices and their associated ID assignments
         public static final int         core_RIO        = 0;
-        public static final int         core_Radio      = 1;
-        public static final int         core_PowerHub   = 2;
-        public static final int         core_IMU        = 10;
+        public static final int         core_PowerHub   = 1;                                                                                // RevRobotics PowerHub
         public static final class swerve {
-            public static final int     FL_Stearing     = 11;
-            public static final int     FL_Drive        = 12;
-            public static final int     FL_Absolute     = 13;
-            public static final int     FR_Stearing     = 21;
-            public static final int     FR_Drive        = 22;
-            public static final int     FR_Absolute     = 23;
-            public static final int     BL_Stearing     = 15;
-            public static final int     BL_Drive        = 16;
-            public static final int     BL_Absolute     = 17;
-            public static final int     BR_Stearing     = 25;
-            public static final int     BR_Drive        = 26;
-            public static final int     BR_Absolute     = 27;
+            public static final int     FL_Stearing     = 11;                                                                               // RevRobotics Vortex Motor w/ Flex Controller
+            public static final int     FL_Drive        = 12;                                                                               // RevRobotics Vortex Motor w/ Flex Controller
+            public static final int     FL_Absolute     = 13;                                                                               // CrossTheRoadElectronics CanCoder
+            public static final int     FR_Stearing     = 21;                                                                               // RevRobotics Vortex Motor w/ Flex Controller
+            public static final int     FR_Drive        = 22;                                                                               // RevRobotics Vortex Motor w/ Flex Controller
+            public static final int     FR_Absolute     = 23;                                                                               // CrossTheRoadElectronics CanCoder
+            public static final int     BL_Stearing     = 31;                                                                               // RevRobotics Vortex Motor w/ Flex Controller
+            public static final int     BL_Drive        = 32;                                                                               // RevRobotics Vortex Motor w/ Flex Controller
+            public static final int     BL_Absolute     = 33;                                                                               // CrossTheRoadElectronics CanCoder
+            public static final int     BR_Stearing     = 41;                                                                               // RevRobotics Vortex Motor w/ Flex Controller
+            public static final int     BR_Drive        = 42;                                                                               // RevRobotics Vortex Motor w/ Flex Controller
+            public static final int     BR_Absolute     = 43;                                                                               // CrossTheRoadElectronics CanCoder
         }
         public static final class elevator {
-            public static final int     Lift_Master     = 30;
-            public static final int     Lift_Follower   = 31;
-            public static final int     Lift_Encoder    = 32;
+            public static final int     Lift_Master     = 15;                                                                               // RevRobotics NEO 750 w/ SparkMax Controller and throughbore encoder
+            public static final int     Lift_Follower   = 16;                                                                               // RevRobotics NEO 750 w/ SparkMax Controller
         }
         public static final class manipulators {
-            public static final int     Coral_Feed      = 33;
-            public static final int     Coral_Tilt      = 34;
+            public static final int     Coral_Feed      = 35;                                                                               // RevRobotics NEO 750 w/ SparkMax Controller
+            public static final int     Coral_Tilt      = 36;                                                                               // RevRobotics NEO 750 w/ SparkMax Controller
+            public static final int     Algae_kicker    = 37;                                                                               // RevRobotics NEO 750 w/ SparkMax Controller
+            public static final int     Algae_Left      = 38;                                                                               // RevRobotics NEO 550 w/ SparkMax Controller
+            public static final int     Algae_Right     = 39;                                                                               // RevRobotics NEO 550 w/ SparkMax Controller
         }
         public static final class climber {
-            public static final int     Paw             = 35;
+            public static final int     Paw             = 35;                                                                               // RevRobotics Vortex Motor w/ Flex Controller
         }
     }
     public static final class sensor {
