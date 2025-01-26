@@ -19,7 +19,7 @@ import edu.wpi.first.wpilibj2.command.Commands;
 
 public class RobotContainer {
 
-  private final swerveSubsystem drivebase = new swerveSubsystem(new File(Filesystem.getDeployDirectory(), "swerve/"+utils.RoboRIOid()));             // The robot's swerve drive subsystems and commands are defined here
+  public static final swerveSubsystem drivebase = new swerveSubsystem(new File(Filesystem.getDeployDirectory(), "swerve/"+utils.RoboRIOid()));             // The robot's swerve drive subsystems and commands are defined here
   SwerveInputStream driveAngularVelocity = SwerveInputStream.of(                                                                        // Converts driver input into a field-relative ChassisSpeeds that is controlled by angular velocity.
     drivebase.getSwerveDrive(),
     () -> Robot.operatorDriver.getLeftY() * -1,
