@@ -84,6 +84,7 @@ public class Constants {
     public static final class CANnet {                                                                                                      // Can Devices and their associated ID assignments
         public static final int         core_RIO        = 0;
         public static final int         core_PowerHub   = 1;                                                                                // RevRobotics PowerHub
+        public static final int         core_IMU        = 2;                                                                               // CrossTheRoadElectronics Pigeon 2.0
         public static final class swerve {
             public static final int     FL_Stearing     = 11;                                                                               // RevRobotics Vortex Motor w/ Flex Controller
             public static final int     FL_Drive        = 12;                                                                               // RevRobotics Vortex Motor w/ Flex Controller
@@ -114,11 +115,11 @@ public class Constants {
         }
     }
     public static final class sensor {
-        public static final int         elevatorStage1  = 0;
-        public static final int         elevatorStage2  = 1;
-        public static final int         elevatorStage3  = 2;
-        public static final int         elevatorCar     = 3;
-        public static final int         coralLoaded     = 4;
-        public static final int         coralEmpty      = 5;
+        public static final int         elevator0       = 0;                                                                                // Optical Sensor on 3rd Stage (on) when at bottom
+        public static final int         elevatorCar0    = 1;                                                                                // Optical Sensor on Car (on) when at bottom
+        public static final int         coralLoaded     = 2;                                                                                // Optical to catch when coral is completely loaded in manipulator
+        public static final int         coralEmpty      = 3;                                                                                // Optical to catch when coral is completely unloaded in manipulator
+        public static final int         climbCageIn     = 4;                                                                                // Optical Sensor to know when cage has settled into climber
+        public static final int         climbCageDown   = 5;                                                                                // 
     }          
 }
