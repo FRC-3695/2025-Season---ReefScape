@@ -11,6 +11,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.DoubleSupplier;
 import java.util.function.Supplier;
 
+import com.ctre.phoenix6.hardware.CANcoder;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 import com.pathplanner.lib.commands.PathfindingCommand;
@@ -21,6 +22,8 @@ import com.pathplanner.lib.path.PathConstraints;
 import com.pathplanner.lib.util.DriveFeedforwards;
 import com.pathplanner.lib.util.swerve.SwerveSetpoint;
 import com.pathplanner.lib.util.swerve.SwerveSetpointGenerator;
+import com.revrobotics.AbsoluteEncoder;
+import com.revrobotics.spark.SparkLowLevel.MotorType;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -43,6 +46,7 @@ import swervelib.SwerveDrive;
 import swervelib.SwerveDriveTest;
 import swervelib.math.SwerveMath;
 import swervelib.SwerveModule;
+import swervelib.encoders.SwerveAbsoluteEncoder;
 import swervelib.motors.SwerveMotor;
 import swervelib.parser.SwerveControllerConfiguration;
 import swervelib.parser.SwerveDriveConfiguration;
@@ -51,7 +55,7 @@ import swervelib.telemetry.SwerveDriveTelemetry;
 import swervelib.telemetry.SwerveDriveTelemetry.TelemetryVerbosity;
 
 public class swerveSubsystem extends SubsystemBase {
-    private final SwerveDrive                           swDrive;                                                                        // Swerve Drive Declared
+    public final SwerveDrive                           swDrive;                                                                        // Swerve Drive Declared
 
     public swerveSubsystem (File directory) {
         SwerveDriveTelemetry.verbosity = TelemetryVerbosity.HIGH;                                                                       // Sets Verbosity of SwerveDrive System on Network Table (Important for Network Speeds)
@@ -349,14 +353,43 @@ public class swerveSubsystem extends SubsystemBase {
     public SwerveDrive getSwerveDrive() {                                                                                               // Gets the swerve drive object.
         return swDrive;
     }
-     public double SwerveModVoltage_Drive(int module) {                                                                                 // Pulls Voltage from Drive Motor on Select Swerve Module
+    public double getSwerveModVoltage_Drive(int module) {                                                                                 // Pulls Voltage from Drive Motor on Select Swerve Module
         SwerveModule[] modules = swDrive.getModules();                                                                                  // > Looks up module data and stores it to {@param - module}
         SwerveMotor motor = modules[module].getDriveMotor();                                                                            // > Gets Drive motor from {@param - module} storing SwerveMotor as {@param - motor}
         return motor.getVoltage();                                                                                                      // > {@param - motor} is pulled to get voltage
     }
-    public double SwerveModVoltage_Steer(int module) {                                                                                  // Pulls Voltage from Angle Motor on Select Swerve Module
+    public double getSwerveModVoltage_Steer(int module) {                                                                                  // Pulls Voltage from Angle Motor on Select Swerve Module
         SwerveModule[] modules = swDrive.getModules();                                                                                  // > Looks up module data and stores it to {@param - module}
         SwerveMotor motor = modules[module].getAngleMotor();                                                                            // > Gets Steering motor from {@param - module} storing SwerveMotor as {@param - motor}
         return motor.getVoltage();                                                                                                      // > {@param - motor} is pulled to get voltage
     }
+    public void checkModuleConnectivity(int module) {
+        SwerveModule[] modules = swDrive.getModules();                                                                                  // > Looks up module data and stores it to {@param - module}
+        SwerveMotor angle = modules[module].getAngleMotor();                                                                            // > Gets Steering motor from {@param - module} storing SwerveMotor as {@param - motor}
+        SwerveMotor drive = modules[module].getDriveMotor();                                                                            // > Gets Drive motor from {@param - module} storing SwerveMotor as {@param - motor}
+        SwerveAbsoluteEncoder encoder = modules[module].getAbsoluteEncoder();
+        try {
+            double var = angle.getPosition();
+        } catch (Exception e) {
+            utils.Logging(5, "Steering Vortex Conectivity Loss on module :" + module);
+        }
+        try {
+            double var = drive.getPosition();
+        } catch (Exception e) {
+            utils.Logging(5, "Drive Vortex Conectivity Loss on module :" + module);
+        }
+        try {
+            double var = encoder.getAbsolutePosition();
+            if (encoder.readingError) {
+                utils.Logging(3, "Reading Error occuring module :" + module);
+            }
+        } catch (Exception e) {
+            utils.Logging(5, "Encoder Conectivity Loss on module :" + module);
+        }
+    }
+    //public double SwerveModVoltage_Encoder(int module) {
+    //    SwerveModule[] modules = swDrive.getModules();
+    //    SwerveAbsoluteEncoder encoder = modules[module].getAbsoluteEncoder();
+    //    return null;
+    //}
 }
