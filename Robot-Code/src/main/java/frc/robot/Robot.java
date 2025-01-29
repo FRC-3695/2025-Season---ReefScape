@@ -5,24 +5,28 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
-
   private RobotContainer m_robotContainer;
 
   private Timer disabledTimer;
   // -----------------------------------------------------------------------------------    Controller(s)    ------------------------------------------------------------------------------------
-  final static CommandXboxController operatorDriver = new CommandXboxController(Constants.operatorDriver.port);                                // Driver's xBox controller
-  final static CommandXboxController operatorManip  = new CommandXboxController(Constants.operatorManip.port);                                 // Operator's xBox controller
+  final static CommandXboxController operatorDriver = new CommandXboxController(Constants.operatorDriver.port);                         // Driver's xBox controller
+  final static CommandXboxController operatorManip  = new CommandXboxController(Constants.operatorManip.port);                          // Operator's xBox controller
   // --------------------------------------------------------------------------------------    Motor(s)    --------------------------------------------------------------------------------------
 
   // -------------------------------------------------------------------------------------    Sensor(s)    --------------------------------------------------------------------------------------
+
+  // ----------------------------------------------------------------------------------    Other Device(s)    -----------------------------------------------------------------------------------
+  public static PowerDistribution powerHub = new PowerDistribution(Constants.CANnet.core_PowerHub, ModuleType.kRev);                    // {@param - powerHub} Power Distribution Hub
 
   // ----------------------------------------------------------------------------------//    Robot Init    //------------------------------------------------------------------------------------
   @Override
