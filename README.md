@@ -13,6 +13,7 @@
 - Liam Schmidt
 - Trent Anderson
 - Steven Dano
+- Chase
 ### Mentor(s)
 - Caroline Pickett [@un-creatrix](https://github.com/un-creatrix)
 - Melissa Pickett [@mpickett3695](https://github.com/mpickett3695)
