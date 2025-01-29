@@ -60,7 +60,7 @@ public class powerSubsystem extends SubsystemBase {
         }
     }
     private void startUp() {                                                                                                            // Run only within first 10s for RoboRIO if not completed
-        if (startupRun) {return;};                                                                                                      // If start up code has been run escape the function to prevent duplicate run
+        if (startupRun) {return;}                                                                                                       // If start up code has been run escape the function to prevent duplicate run
         Robot.powerHub.clearStickyFaults();                                                                                             // Clear recorded faults on power hub so diagnostics can be stored for later download that are relevent
         Robot.powerHub.resetTotalEnergy();                                                                                              // Reset energy consumption as to give an ide to energy consumed per match or run
         hubChannelPopulated();
