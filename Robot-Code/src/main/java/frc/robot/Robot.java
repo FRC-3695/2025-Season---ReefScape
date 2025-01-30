@@ -4,6 +4,9 @@
 
 package frc.robot;
 
+import com.revrobotics.spark.SparkFlex;
+import com.revrobotics.spark.SparkLowLevel.MotorType;
+
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -12,6 +15,9 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
+import edu.wpi.first.wpilibj.motorcontrol.MotorController;
+import com.revrobotics.CANSparkFlex;
+import com.revrobotics.CANSparkLowLevel.MotorType;
 
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
@@ -22,7 +28,29 @@ public class Robot extends TimedRobot {
   final static CommandXboxController operatorDriver = new CommandXboxController(Constants.operatorDriver.port);                         // Driver's xBox controller
   final static CommandXboxController operatorManip  = new CommandXboxController(Constants.operatorManip.port);                          // Operator's xBox controller
   // --------------------------------------------------------------------------------------    Motor(s)    --------------------------------------------------------------------------------------
+  
+  // Front Left Motors :3
+  SparkFlex FL_Stearing = new SparkFlex(Constants.CANnet.swerve.FL_Stearing, MotorType.kBrushless);
+  SparkFlex FL_Drive = new SparkFlex(Constants.CANnet.swerve.FL_Drive, MotorType.kBrushless);
+  SparkFlex FL_Absolute = new SparkFlex(Constants.CANnet.swerve.FL_Absolute, MotorType.kBrushless);
+  // Front Right Motors :3
+  SparkFlex FR_Absolute = new SparkFlex(Constants.CANnet.swerve.FR_Absolute, MotorType.kBrushless);
+  SparkFlex FR_Drive = new SparkFlex(Constants.CANnet.swerve.FR_Drive, MotorType.kBrushless);
+  SparkFlex FR_Stearing = new SparkFlex(Constants.CANnet.swerve.FR_Drive, MotorType.kBrushless);
+  // Back Right Motors :3
+  SparkFlex BR_Absolute = new SparkFlex(Constants.CANnet.swerve.BR_Absolute, MotorType.kBrushless);
+  SparkFlex BR_Drive = new SparkFlex(Constants.CANnet.swerve.BR_Drive, MotorType.kBrushless);
+  SparkFlex BR_Stearing = new SparkFlex(Constants.CANnet.swerve.BR_Drive, MotorType.kBrushless);
+  // Back Left Motors :3
+  SparkFlex BL_Absolute = new SparkFlex(Constants.CANnet.swerve.BL_Absolute, MotorType.kBrushless);
+  SparkFlex BL_Drive = new SparkFlex(Constants.CANnet.swerve.BL_Drive, MotorType.kBrushless);
+  SparkFlex BL_Stearing = new SparkFlex(Constants.CANnet.swerve.BL_Stearing, MotorType.kBrushless);
 
+
+
+
+
+ 
   // -------------------------------------------------------------------------------------    Sensor(s)    --------------------------------------------------------------------------------------
 
   // ----------------------------------------------------------------------------------    Other Device(s)    -----------------------------------------------------------------------------------
@@ -67,6 +95,8 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
     }
+
+    
   }
   // ----------------------------------------------------------------------------------//    Auto Prdic    //------------------------------------------------------------------------------------
   @Override
