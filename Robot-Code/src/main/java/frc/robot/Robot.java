@@ -4,6 +4,17 @@
 
 package frc.robot;
 
+import com.revrobotics.AbsoluteEncoder;
+import com.revrobotics.RelativeEncoder;
+import com.revrobotics.spark.ClosedLoopSlot;
+import com.revrobotics.spark.SparkFlex;
+import com.revrobotics.spark.SparkMax;
+import com.revrobotics.spark.SparkLowLevel.*;
+import com.revrobotics.spark.config.SparkMaxConfig;
+import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
+import com.revrobotics.spark.SparkBase.PersistMode;
+import com.revrobotics.spark.SparkBase.ResetMode;
+
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -22,13 +33,20 @@ public class Robot extends TimedRobot {
   final static CommandXboxController operatorDriver = new CommandXboxController(Constants.operatorDriver.port);                         // Driver's xBox controller
   final static CommandXboxController operatorManip  = new CommandXboxController(Constants.operatorManip.port);                          // Operator's xBox controller
   // --------------------------------------------------------------------------------------    Motor(s)    --------------------------------------------------------------------------------------
-
+  final static SparkMax elevatorMotor_Lead = new SparkMax(Constants.CANnet.elevator.Lift_Master, MotorType.kBrushless);
+  final static SparkMax elevatorMotor_Follower = new SparkMax(Constants.CANnet.elevator.Lift_Follower, MotorType.kBrushless);
+  final static SparkFlex climberMotor_Paw = new SparkFlex(Constants.CANnet.climber.Paw, MotorType.kBrushless);
   // -------------------------------------------------------------------------------------    Sensor(s)    --------------------------------------------------------------------------------------
-
+  final static AbsoluteEncoder elevatorEncoder_Lead = elevatorMotor_Lead.getAbsoluteEncoder();
+  final static AbsoluteEncoder elevatorEncoder_Follower = elevatorMotor_Follower.getAbsoluteEncoder();
+  final static RelativeEncoder elevatorEncoder_LeadAlt = elevatorMotor_Lead.getAlternateEncoder();
+  final static AbsoluteEncoder climberCodoer_PawEncoder = climberMotor_Paw.getAbsoluteEncoder();
   // ----------------------------------------------------------------------------------    Other Device(s)    -----------------------------------------------------------------------------------
   public static PowerDistribution powerHub = new PowerDistribution(Constants.CANnet.core_PowerHub, ModuleType.kRev);                    // {@param - powerHub} Power Distribution Hub
-
   // ----------------------------------------------------------------------------------//    Robot Init    //------------------------------------------------------------------------------------
+  private static SparkMaxConfig elevatorMotorConfig_Global = new SparkMaxConfig();
+  private static SparkMaxConfig elevatorMotorConfig_Lead = new SparkMaxConfig();
+  private static SparkMaxConfig elevatorMotorConfig_Follower = new SparkMaxConfig();
   @Override
   public void robotInit() {                                                                                                             // Called on robot startup, best use is for anything needed to prep robot and ensure std. start state
     m_robotContainer = new RobotContainer();
@@ -36,6 +54,8 @@ public class Robot extends TimedRobot {
     if (isSimulation()) {                                                                                                               // Checks to see if code is running in simulation
       DriverStation.silenceJoystickConnectionWarning(true);                                                                     // -> Silences Joystick Connection Warning
     }
+    motorConfig();
+    sensorConfig();
   }
   // ---------------------------------------------------------------------------------//    Robot Prdic    //------------------------------------------------------------------------------------
   @Override
@@ -98,4 +118,37 @@ public class Robot extends TimedRobot {
   // -----------------------------------------------------------------------------------//    Test Exit    //------------------------------------------------------------------------------------
   @Override
   public void testExit() {}
+  // ----------------------------------------------------------------------------------//    Function(s)   //------------------------------------------------------------------------------------
+  public void motorConfig() {
+    elevatorMotorConfig_Global                                                                                                          //
+      .inverted(false)
+      .smartCurrentLimit(50)
+      .idleMode(IdleMode.kBrake);
+    elevatorMotorConfig_Global.closedLoop                                                                                               //
+      .pid(                                                                                                                             //
+        Constants.config.elevator.PIDF_P,
+        Constants.config.elevator.PIDF_I,
+        Constants.config.elevator.PIDF_D,
+        ClosedLoopSlot.kSlot0
+      )
+      .velocityFF(Constants.config.elevator.velocityFF, ClosedLoopSlot.kSlot0)                                                          //
+      .outputRange(0, 1, ClosedLoopSlot.kSlot0);                                                                                        //
+    elevatorMotorConfig_Global.closedLoop.maxMotion                                                                                     //
+      .maxAcceleration(Constants.config.elevator.accelerationMax, ClosedLoopSlot.kSlot0)                                                //
+      .maxVelocity(Constants.config.elevator.velocityMax, ClosedLoopSlot.kSlot0)                                                        //
+      .allowedClosedLoopError(1, ClosedLoopSlot.kSlot0);                                                                                //
+    elevatorMotorConfig_Lead.apply(elevatorMotorConfig_Global);                                                                         //
+    elevatorMotorConfig_Lead.alternateEncoder                                                                                           //
+        .countsPerRevolution(Constants.config.elevator.altReltEncoder);
+    elevatorMotorConfig_Follower                                                                                                        //
+      .apply(elevatorMotorConfig_Global)
+      .follow(Constants.CANnet.elevator.Lift_Master);
+    elevatorMotor_Lead.clearFaults();                                                                                                   //
+    elevatorMotor_Lead.configure(elevatorMotorConfig_Lead, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);             //
+    elevatorMotor_Follower.clearFaults();                                                                                               //
+    elevatorMotor_Follower.configure(elevatorMotorConfig_Follower, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);     //
+  }
+  public void sensorConfig() {
+    
+  }
 }
