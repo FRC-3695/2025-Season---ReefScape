@@ -121,5 +121,22 @@ public class Constants {
         public static final int         coralEmpty      = 3;                                                                                // Optical to catch when coral is completely unloaded in manipulator
         public static final int         climbCageIn     = 4;                                                                                // Optical Sensor to know when cage has settled into climber
         public static final int         climbCageDown   = 5;                                                                                // 
+    }
+    public static final class config {
+        public static final class elevator {
+            public static final int         stallAmp        = 50;                                                                           //
+            public static final int         altReltEncoder  = 8192;                                                                         // 
+            public static final double      ratioGearBox    = 6;                                                                            // Single Stage gear box with 6:1 Ratio by RevRobotics
+            public static final double      climbRatio      = 0;                                                                            // 
+            public static final double      PIDF_P          = 0.001;                                                                        //
+            public static final double      PIDF_I          = 0.000;                                                                        //
+            public static final double      PIDF_D          = 0.000;                                                                        //
+            public static final double      velocityFF      = 0.000;                                                                        //
+            public static final double      velocityMax     = 6000.0;                                                                       //
+            public static final double      accelerationMax = 0.000;                                                                        //
+        }
+        public static final class climber {
+
+        }
     }          
 }
