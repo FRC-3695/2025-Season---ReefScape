@@ -20,6 +20,7 @@ public class manipulatorSubsystem extends SubsystemBase {
         if (DriverStation.isTestEnabled()) {                                                                                            // Runs if Driverstation is in Test and Enabled
             dashboardTest();
         }
+        encoderZero();
     }
     // ------------------------------------------------------------------------------------    Functions    -------------------------------------------------------------------------------------
     private static void dashboardUpdate() {                                                                                             // Updates Dashboard Data
