@@ -115,7 +115,7 @@ public class Constants {
         }
     }
     public static final class sensor {
-        public static final int         elevator0       = 0;                                                                                // Optical Sensor on 3rd Stage (on) when at bottom
+        public static final int         elevator0       = 0;                                                                                // Reed Switch Sensor on 3rd Stage (on) when at bottom
         public static final int         elevatorCar0    = 1;                                                                                // Optical Sensor on Car (on) when at bottom
         public static final int         coralLoaded     = 2;                                                                                // Optical to catch when coral is completely loaded in manipulator
         public static final int         coralEmpty      = 3;                                                                                // Optical to catch when coral is completely unloaded in manipulator
