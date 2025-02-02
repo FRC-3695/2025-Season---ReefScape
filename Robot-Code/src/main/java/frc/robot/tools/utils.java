@@ -1,10 +1,15 @@
 package frc.robot.tools;
 import java.text.DecimalFormat;
+
+import com.acidmanic.consoletools.terminal.Terminal;
+
 //WPILib Libraries
 import edu.wpi.first.hal.HALUtil;
+import frc.robot.BuildConstants;
 
 public class utils {
     private static double lastTripRisk;
+    private static Terminal Console = new Terminal();
     private utils() {}
     // ------------------------------------------------------------------------------------------    Math    ------------------------------------------------------------------------------------------
     public static double map(double x, double in_min, double in_max, double out_min, double out_max) {
@@ -19,28 +24,51 @@ public class utils {
         System.out.print(ft.format(time));
         switch (level) {
             case 0:
+                Console.setScreenAttributes(Terminal.Constants.FOREGROUND_MAGENTA, Terminal.Constants.BACKGROUND_BLACK);
                 System.out.print(" - Debug - ");
                 break;
             case 1:
+                Console.setScreenAttributes(Terminal.Constants.FOREGROUND_BLUE, Terminal.Constants.BACKGROUND_BLACK);
                 System.out.print(" - Info - ");
                 break;
             case 2:
+                Console.setScreenAttributes(Terminal.Constants.FOREGROUND_MAGENTA, Terminal.Constants.BACKGROUND_BLACK);
                 System.out.print(" - Error - ");
                 break;
             case 3:
+                Console.setScreenAttributes(Terminal.Constants.FOREGROUND_YELLOW, Terminal.Constants.BACKGROUND_BLACK);
                 System.out.print(" - ! Alert ! - ");
                 break;
             case 4:
+                Console.setScreenAttributes(Terminal.Constants.FOREGROUND_RED, Terminal.Constants.BACKGROUND_BLACK);
                 System.out.print(" - (/) Warning (/) - ");
                 break;
             case 5:
+                Console.setScreenAttributes(Terminal.Constants.FOREGROUND_BLACK, Terminal.Constants.BACKGROUND_RED);
                 System.out.print(" - </> Critical </> - ");
                 break;
             default:
-
                 break;
         }
+        Console.setScreenAttributes(Terminal.Constants.FOREGROUND_MAGENTA, Terminal.Constants.BACKGROUND_BLACK);
         System.out.println(event);
+    }
+    // ----------------------------------------------------------------------------------------    GitData    -----------------------------------------------------------------------------------------
+    public static void GitInfo() {
+        Console.setScreenAttributes(Terminal.Constants.FOREGROUND_MAGENTA, Terminal.Constants.BACKGROUND_BLACK);
+        System.out.println("|");
+        System.out.println("****************************************************");
+        System.out.println("Build Branch: "+ BuildConstants.MAVEN_NAME);
+        System.out.println("GIT Revision: "+ BuildConstants.GIT_REVISION);
+        System.out.println("Built on: "+ BuildConstants.BUILD_DATE + " @ " + BuildConstants.BUILD_UNIX_TIME);
+        System.out.println("GIT_SHA: "+ BuildConstants.GIT_SHA);
+        if(BuildConstants.DIRTY != 0) {       
+            Console.setScreenAttributes(Terminal.Constants.FOREGROUND_RED, Terminal.Constants.BACKGROUND_BLACK);                                                                                                                                    // Warning of uncommited changes in deployed build
+            System.out.println("|\n****************************************************\n****************************************************\n    ********** Fruit of the Poisonous Tree *************");
+        }
+        Console.setScreenAttributes(Terminal.Constants.FOREGROUND_MAGENTA, Terminal.Constants.BACKGROUND_BLACK);
+        System.out.println("****************************************************");
+        System.out.println("|");
     }
     // ---------------------------------------------------------------------------------    RoboRIO Identification    ---------------------------------------------------------------------------------
     public static String RoboRIOid() {
