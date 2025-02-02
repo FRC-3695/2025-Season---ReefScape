@@ -124,16 +124,16 @@ public class Constants {
     }
     public static final class config {
         public static final class elevator {
-            public static final int         stallAmp        = 50;                                                                           //
-            public static final int         altReltEncoder  = 8192;                                                                         // 
+            public static final int         stallAmp        = 50;                                                                           // Stall Amps
+            public static final int         altReltEncoder  = 8192;                                                                         // Encoder Steps per Revolution for Throughbore Encoder
             public static final double      ratioGearBox    = 6;                                                                            // Single Stage gear box with 6:1 Ratio by RevRobotics
-            public static final double      climbRatio      = 0;                                                                            // 
-            public static final double      PIDF_P          = 0.001;                                                                        //
-            public static final double      PIDF_I          = 0.000;                                                                        //
-            public static final double      PIDF_D          = 0.000;                                                                        //
-            public static final double      velocityFF      = 0.000;                                                                        //
-            public static final double      velocityMax     = 6000.0;                                                                       //
-            public static final double      accelerationMax = 0.000;                                                                        //
+            public static final double      climbRatio      = 0;                                                                            // Conversion Factor
+            public static final double      PIDF_P          = 0.001;                                                                        // Proportional
+            public static final double      PIDF_I          = 0.000;                                                                        // Integral Factor
+            public static final double      PIDF_D          = 0.000;                                                                        // Derivative
+            public static final double      velocityFF      = 0.000;                                                                        // Feed-Forward
+            public static final double      velocityMax     = 6000.0;                                                                       // Max Velocity Allowed
+            public static final double      accelerationMax = 0.000;                                                                        // Max Acceleration Allowed
         }
         public static final class climber {
 
