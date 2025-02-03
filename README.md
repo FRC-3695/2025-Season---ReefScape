@@ -2,6 +2,7 @@
 ## Code Health
 ![GitHub License](https://img.shields.io/github/license/FRC-3695/2025-Season---ReefScape?style=for-the-badge)
 ![CodeFactor Grade](https://img.shields.io/codefactor/grade/github/FRC-3695/2025-Season---ReefScape?style=for-the-badge)
+![GitHub Release](https://img.shields.io/github/v/release/FRC-3695/2025-Season---ReefScape?include_prereleases&style=for-the-badge)
 
 ## Season Notes
 ## Code Notes
