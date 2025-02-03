@@ -1,6 +1,8 @@
 ![logo](/Images/Logo.png?raw=true)
 ## Code Health
-[![CodeFactor](https://www.codefactor.io/repository/github/frc-3695/2025-season---reefscape/badge)](https://www.codefactor.io/repository/github/frc-3695/2025-season---reefscape)
+![GitHub License](https://img.shields.io/github/license/FRC-3695/2025-Season---ReefScape?style=for-the-badge)
+![CodeFactor Grade](https://img.shields.io/codefactor/grade/github/FRC-3695/2025-Season---ReefScape?style=for-the-badge)
+
 ## Season Notes
 ## Code Notes
 ## Contributors
