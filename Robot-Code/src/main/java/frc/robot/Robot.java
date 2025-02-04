@@ -4,14 +4,17 @@
 
 package frc.robot;
 
+import com.revrobotics.spark.SparkFlex;
+import com.revrobotics.spark.SparkLowLevel.MotorType;
+
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PowerDistribution;
+import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
@@ -23,10 +26,33 @@ public class Robot extends TimedRobot {
   final static CommandXboxController operatorManip  = new CommandXboxController(Constants.operatorManip.port);                          // Operator's xBox controller
   // --------------------------------------------------------------------------------------    Motor(s)    --------------------------------------------------------------------------------------
 
-  // -------------------------------------------------------------------------------------    Sensor(s)    --------------------------------------------------------------------------------------
 
-  // ----------------------------------------------------------------------------------    Other Device(s)    -----------------------------------------------------------------------------------
+  final static SparkFlex FL_stearing = new SparkFlex(Constants.CANnet.swerve.FL_Stearing, MotorType.kBrushless );
+  final static SparkFlex FL_absolute = new SparkFlex(Constants.CANnet.swerve.FL_Absolute, MotorType.kBrushless );
+  final static SparkFlex FL_drive = new SparkFlex(Constants.CANnet.swerve.FL_Drive, MotorType.kBrushless );
+
+  final static SparkFlex FR_absolute = new SparkFlex(Constants.CANnet.swerve.FR_Absolute, MotorType.kBrushless );
+  final static SparkFlex FR_stearing = new SparkFlex(Constants.CANnet.swerve.FR_Stearing, MotorType.kBrushless );
+  final static SparkFlex FR_drive = new SparkFlex(Constants.CANnet.swerve.FR_Drive, MotorType.kBrushless );
+
+  final static SparkFlex BR_absolute = new SparkFlex(Constants.CANnet.swerve.BR_Absolute, MotorType.kBrushless );
+  final static SparkFlex BR_stearing = new SparkFlex(Constants.CANnet.swerve.BR_Stearing, MotorType.kBrushless );
+  final static SparkFlex BR_drive = new SparkFlex(Constants.CANnet.swerve.BR_Drive, MotorType.kBrushless );
+
+  final static SparkFlex BL_absolute = new SparkFlex(Constants.CANnet.swerve.BL_Absolute, MotorType.kBrushless );
+  final static SparkFlex BL_stearing = new SparkFlex(Constants.CANnet.swerve.BL_Stearing, MotorType.kBrushless );
+  final static SparkFlex BL_drive = new SparkFlex(Constants.CANnet.swerve.BL_Drive, MotorType.kBrushless );
+
+  final static SparkFlex climber_Paw = new SparkFlex(Constants.CANnet.climber.Paw, MotorType.kBrushless);
+
+
+
+
+
+  // -------------------------------------------------------------------------------------    Sensor(s)    --------------------------------------------------------------------------------------
   public static PowerDistribution powerHub = new PowerDistribution(Constants.CANnet.core_PowerHub, ModuleType.kRev);                    // {@param - powerHub} Power Distribution Hub
+
+  final static AbsoluteEncoder climber_PawEncoder = climber_Paw.getAbsoluteEncoder();  // ----------------------------------------------------------------------------------    Other Device(s)    -----------------------------------------------------------------------------------
 
   // ----------------------------------------------------------------------------------//    Robot Init    //------------------------------------------------------------------------------------
   @Override
