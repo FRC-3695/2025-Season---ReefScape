@@ -72,19 +72,26 @@ public class Constants {
         public static final int    port_sw_B_Encoders   = 15;                                                                               // Port on the Power Hub for the Back two Absolute Encoders on the Swerve Modules
         public static final int   fused_sw_B_Encoders   = 10;                                                                               //amps, Fused for
         public static final int    port_sw_IMU          = 23;                                                                               // Port on the Power Hub for the CTRE Pigeon2 IMU
-        public static final int   fused_sw_IMU          = 5;                                                                                //amps, Fused for
+        public static final int   fused_sw_IMU          = 5;   
+                                                                                     //amps, Fused for
         public static final class managment{
-            public static final double  sw_vtDrop_tol   = 0.095;                                                                            // Swerve Drive Percent Voltage Drop Tolerated Before Alert
-            public static final double  swD_SurgeAmp    = 50;                                                                               //amps, 
-            public static final double  swD_CritAmp     = 75;                                                                               //amps, 
-            public static final int     swD_BreakAmp    = 60;                                                                               //amps, 
-            public static final double  swD_BreakTime   = 1000;                                                                             //ms, 
-        } 
+        public static final double  sw_vtDrop_tol   = 0.095;                                                                            // Swerve Drive Percent Voltage Drop Tolerated Before Alert
+        public static final double  swD_SurgeAmp    = 50; 
+        public static final int     swD_BreakAmp    = 60;                                                                               //amps, 
+        public static final double  swD_BreakTime   = 1000;
+        public static final double  swD_CritAmp     = 75;                                                                               //amps, 
+
+        }
+        
     }
-    public static final class CANnet {                                                                                                      // Can Devices and their associated ID assignments
+    public static final class CANnet {                                                                                                     // Can Devices and their associated ID assignments
         public static final int         core_RIO        = 0;
         public static final int         core_PowerHub   = 1;                                                                                // RevRobotics PowerHub
-        public static final int         core_IMU        = 2;                                                                               // CrossTheRoadElectronics Pigeon 2.0
+        public static final int         core_IMU        = 2;    
+        
+        
+        
+        // CrossTheRoadElectronics Pigeon 2.0
         public static final class swerve {
             public static final int     FL_Stearing     = 11;                                                                               // RevRobotics Vortex Motor w/ Flex Controller
             public static final int     FL_Drive        = 12;                                                                               // RevRobotics Vortex Motor w/ Flex Controller
@@ -122,4 +129,5 @@ public class Constants {
         public static final int         climbCageIn     = 4;                                                                                // Optical Sensor to know when cage has settled into climber
         public static final int         climbCageDown   = 5;                                                                                // 
     }          
+
 }

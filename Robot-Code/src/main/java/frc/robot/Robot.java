@@ -53,7 +53,8 @@ public class Robot extends TimedRobot {
   // -------------------------------------------------------------------------------------    Sensor(s)    --------------------------------------------------------------------------------------
   public static PowerDistribution powerHub = new PowerDistribution(Constants.CANnet.core_PowerHub, ModuleType.kRev);                    // {@param - powerHub} Power Distribution Hub
 
-  final static SparkAbsoluteEncoder climber_PawEncoder = climber_Paw.getAbsoluteEncoder();  // ----------------------------------------------------------------------------------    Other Device(s)    -----------------------------------------------------------------------------------
+  final static SparkAbsoluteEncoder climber_PawEncoder = climber_Paw.getAbsoluteEncoder();  
+  // ----------------------------------------------------------------------------------    Other Device(s)    -----------------------------------------------------------------------------------
 
   // ----------------------------------------------------------------------------------//    Robot Init    //------------------------------------------------------------------------------------
   @Override

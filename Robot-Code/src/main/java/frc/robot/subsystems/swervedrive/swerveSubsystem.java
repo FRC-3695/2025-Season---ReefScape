@@ -54,8 +54,9 @@ import swervelib.parser.SwerveParser;
 import swervelib.telemetry.SwerveDriveTelemetry;
 import swervelib.telemetry.SwerveDriveTelemetry.TelemetryVerbosity;
 
+
 public class swerveSubsystem extends SubsystemBase {
-    public final SwerveDrive                           swDrive;                                                                        // Swerve Drive Declared
+    private final SwerveDrive                           swDrive;                                                                        // Swerve Drive Declared
 
     public swerveSubsystem (File directory) {
         SwerveDriveTelemetry.verbosity = TelemetryVerbosity.HIGH;                                                                       // Sets Verbosity of SwerveDrive System on Network Table (Important for Network Speeds)
