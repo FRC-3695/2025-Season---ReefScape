@@ -111,15 +111,32 @@ public class Constants {
             public static final int     Algae_Right     = 39;                                                                               // RevRobotics NEO 550 w/ SparkMax Controller
         }
         public static final class climber {
-            public static final int     Paw             = 35;                                                                               // RevRobotics Vortex Motor w/ Flex Controller
+            public static final int     Paw             = 25;                                                                               // RevRobotics Vortex Motor w/ Flex Controller
         }
     }
     public static final class sensor {
-        public static final int         elevator0       = 0;                                                                                // Optical Sensor on 3rd Stage (on) when at bottom
+        public static final int         elevator0       = 0;                                                                                // Reed Switch Sensor on 3rd Stage (on) when at bottom
         public static final int         elevatorCar0    = 1;                                                                                // Optical Sensor on Car (on) when at bottom
         public static final int         coralLoaded     = 2;                                                                                // Optical to catch when coral is completely loaded in manipulator
         public static final int         coralEmpty      = 3;                                                                                // Optical to catch when coral is completely unloaded in manipulator
         public static final int         climbCageIn     = 4;                                                                                // Optical Sensor to know when cage has settled into climber
         public static final int         climbCageDown   = 5;                                                                                // 
+    }
+    public static final class config {
+        public static final class elevator {
+            public static final int         stallAmp        = 50;                                                                           // Stall Amps
+            public static final int         altReltEncoder  = 8192;                                                                         // Encoder Steps per Revolution for Throughbore Encoder
+            public static final double      ratioGearBox    = 6;                                                                            // Single Stage gear box with 6:1 Ratio by RevRobotics
+            public static final double      climbRatio      = 0;                                                                            // Conversion Factor
+            public static final double      PIDF_P          = 0.001;                                                                        // Proportional
+            public static final double      PIDF_I          = 0.000;                                                                        // Integral Factor
+            public static final double      PIDF_D          = 0.000;                                                                        // Derivative
+            public static final double      velocityFF      = 0.000;                                                                        // Feed-Forward
+            public static final double      velocityMax     = 6000.0;                                                                       // Max Velocity Allowed
+            public static final double      accelerationMax = 0.000;                                                                        // Max Acceleration Allowed
+        }
+        public static final class climber {
+
+        }
     }          
 }
