@@ -111,7 +111,7 @@ public class Constants {
             public static final int     Algae_Right     = 39;                                                                               // RevRobotics NEO 550 w/ SparkMax Controller
         }
         public static final class climber {
-            public static final int     Paw             = 35;                                                                               // RevRobotics Vortex Motor w/ Flex Controller
+            public static final int     Paw             = 25;                                                                               // RevRobotics Vortex Motor w/ Flex Controller
         }
     }
     public static final class sensor {
