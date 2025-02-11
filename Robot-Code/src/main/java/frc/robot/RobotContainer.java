@@ -11,6 +11,7 @@ import swervelib.SwerveInputStream;
 import java.io.File;
 
 import com.pathplanner.lib.auto.NamedCommands;
+import com.pathplanner.lib.commands.PathPlannerAuto;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
@@ -68,7 +69,9 @@ public class RobotContainer {
   }
 
   public Command getAutonomousCommand() {
-    return Commands.print("No autonomous command configured");
+   // return Commands.print("No autonomous command configured");
+    return new PathPlannerAuto("SamplePath.path");
+
   }
   // -------------------------------------------------------------------------------//    Auto Pass Through    //--------------------------------------------------------------------------------
 

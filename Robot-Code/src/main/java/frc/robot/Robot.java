@@ -28,23 +28,23 @@ public class Robot extends TimedRobot {
   // --------------------------------------------------------------------------------------    Motor(s)    --------------------------------------------------------------------------------------
 
 
-  final static SparkFlex FL_stearing = new SparkFlex(Constants.CANnet.swerve.FL_Stearing, MotorType.kBrushless );
-  final static SparkFlex FL_absolute = new SparkFlex(Constants.CANnet.swerve.FL_Absolute, MotorType.kBrushless );
-  final static SparkFlex FL_drive = new SparkFlex(Constants.CANnet.swerve.FL_Drive, MotorType.kBrushless );
+  public static final SparkFlex FL_stearing = new SparkFlex(Constants.CANnet.swerve.FL_Stearing, MotorType.kBrushless );
+  public static final SparkFlex FL_absolute = new SparkFlex(Constants.CANnet.swerve.FL_Absolute, MotorType.kBrushless );
+  public static final SparkFlex FL_drive = new SparkFlex(Constants.CANnet.swerve.FL_Drive, MotorType.kBrushless );
 
-  final static SparkFlex FR_absolute = new SparkFlex(Constants.CANnet.swerve.FR_Absolute, MotorType.kBrushless );
-  final static SparkFlex FR_stearing = new SparkFlex(Constants.CANnet.swerve.FR_Stearing, MotorType.kBrushless );
-  final static SparkFlex FR_drive = new SparkFlex(Constants.CANnet.swerve.FR_Drive, MotorType.kBrushless );
+  public static final SparkFlex FR_absolute = new SparkFlex(Constants.CANnet.swerve.FR_Absolute, MotorType.kBrushless );
+  public static final SparkFlex FR_stearing = new SparkFlex(Constants.CANnet.swerve.FR_Stearing, MotorType.kBrushless );
+  public static final SparkFlex FR_drive = new SparkFlex(Constants.CANnet.swerve.FR_Drive, MotorType.kBrushless );
 
-  final static SparkFlex BR_absolute = new SparkFlex(Constants.CANnet.swerve.BR_Absolute, MotorType.kBrushless );
-  final static SparkFlex BR_stearing = new SparkFlex(Constants.CANnet.swerve.BR_Stearing, MotorType.kBrushless );
-  final static SparkFlex BR_drive = new SparkFlex(Constants.CANnet.swerve.BR_Drive, MotorType.kBrushless );
+  public static final SparkFlex BR_absolute = new SparkFlex(Constants.CANnet.swerve.BR_Absolute, MotorType.kBrushless );
+  public static final SparkFlex BR_stearing = new SparkFlex(Constants.CANnet.swerve.BR_Stearing, MotorType.kBrushless );
+  public static final SparkFlex BR_drive = new SparkFlex(Constants.CANnet.swerve.BR_Drive, MotorType.kBrushless );
 
-  final static SparkFlex BL_absolute = new SparkFlex(Constants.CANnet.swerve.BL_Absolute, MotorType.kBrushless );
-  final static SparkFlex BL_stearing = new SparkFlex(Constants.CANnet.swerve.BL_Stearing, MotorType.kBrushless );
-  final static SparkFlex BL_drive = new SparkFlex(Constants.CANnet.swerve.BL_Drive, MotorType.kBrushless );
+  public static final SparkFlex BL_absolute = new SparkFlex(Constants.CANnet.swerve.BL_Absolute, MotorType.kBrushless );
+  public static final SparkFlex BL_stearing = new SparkFlex(Constants.CANnet.swerve.BL_Stearing, MotorType.kBrushless );
+  public static final SparkFlex BL_drive = new SparkFlex(Constants.CANnet.swerve.BL_Drive, MotorType.kBrushless );
 
-  final static SparkFlex climber_Paw = new SparkFlex(Constants.CANnet.climber.Paw, MotorType.kBrushless);
+  public static final SparkFlex climber_Paw = new SparkFlex(Constants.CANnet.climber.Paw, MotorType.kBrushless);
 
 
 
