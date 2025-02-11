@@ -134,13 +134,13 @@ public class Constants {
             public static final double      velocityFF      = 0.000;                                                                        // Feed-Forward
             public static final double      velocityMax     = 6000.0;                                                                       // Max Velocity Allowed
             public static final double      accelerationMax = 0.000;                                                                        // Max Acceleration Allowed
-            public static final double      heightAtZero    = 00.00;
-            public static final double      heightMax       = 00.00;
-            public static final double      feeder_Height   = 00.00;
-            public static final double      reef_L1         = 00.00;
-            public static final double      reef_L2         = 00.00;
-            public static final double      reef_L3         = 00.00;
-            public static final double      reef_L4         = 00.00;
+            public static final double      heightAtZero    = 00.00;                                                                        // Height of coral cage at lowest point
+            public static final double      heightMax       = 00.00;                                                                        // Max travel of elevator from 0 position
+            public static final double      feeder_Height   = 00.00;                                                                        // Height required to receive coral pieces from feeder
+            public static final double      reef_L1         = 00.00;                                                                        // Height required to score Level 1 on Reef
+            public static final double      reef_L2         = 00.00;                                                                        // Height required to score Level 2 on Reef
+            public static final double      reef_L3         = 00.00;                                                                        // Height required to score Level 3 on Reef
+            public static final double      reef_L4         = 00.00;                                                                        // Height required to score Level 4 on Reef
         }
         public static final class climber {
 
