@@ -102,9 +102,7 @@ public class utils {
     }
     // -------------------------------------------------------------------------------    Motor Faults Testing    --------------------------------------------------------------------------------
 
-
     //Swerve Modules logging 
-
     public static void moduleConnectionTest() {
 
         //Output Colors: 
@@ -112,54 +110,52 @@ public class utils {
         final String outputTextRED = "\u001B[31m";
 
 
-
         // Front Left Motors 
 
        if (Robot.FL_stearing.hasActiveFault()) {
-        System.out.println(outputTextRED + "Front Left Stearing Motor has an issue." + outputTextRESET);
+        System.out.println(outputTextRED + "ERROR:" + outputTextRESET + "Front Left Stearing Motor has an issue." );
        }
        if (Robot.FL_absolute.hasActiveFault()) {
-        System.out.println(outputTextRED +"Front Left Absolute Motor has an issue." + outputTextRESET);
+        System.out.println(outputTextRED + "ERROR:" + outputTextRESET + "Front Left Absolute Motor has an issue." + outputTextRESET);
        }
        if (Robot.FL_absolute.hasActiveFault()) {
-        System.out.println(outputTextRED + "Front Left Absolute Motor has an issue." + outputTextRESET);
+        System.out.println(outputTextRED + "ERROR:" + outputTextRESET +  "Front Left Absolute Motor has an issue." + outputTextRESET);
        }
 
        // Frony Right Motors
        if (Robot.FR_stearing.hasActiveFault()) {
-        System.out.println(outputTextRED + "Front Right Stearing Motor has an issue." + outputTextRESET);
+        System.out.println(outputTextRED + "ERROR:" + outputTextRESET + "Front Right Stearing Motor has an issue." + outputTextRESET);
        }
        if (Robot.FR_absolute.hasActiveFault()) {
-        System.out.println(outputTextRED + "Front Right Absolute Motor has an issue." + outputTextRESET);
+        System.out.println(outputTextRED + "ERROR:" + outputTextRESET + "Front Right Absolute Motor has an issue." + outputTextRESET);
        }
        if (Robot.FR_absolute.hasActiveFault()) {
-        System.out.println(outputTextRED + "Front Right Absolute Motor has an issue." + outputTextRESET);
+        System.out.println(outputTextRED + "ERROR:" + outputTextRESET + "Front Right Absolute Motor has an issue." + outputTextRESET);
        }
 
        // Back Left Motors 
        if (Robot.BL_stearing.hasActiveFault()) {
-        System.out.println(outputTextRED + "Back Left Stearing Motor has an issue." + outputTextRESET);
+        System.out.println(outputTextRED + "ERROR:" + outputTextRESET + "Back Left Stearing Motor has an issue." + outputTextRESET);
        }
        if (Robot.BL_absolute.hasActiveFault()) {
-        System.out.println(outputTextRED + "Back Left Absolute Motor has an issue." + outputTextRESET);
+        System.out.println(outputTextRED + "ERROR:" + outputTextRESET + "Back Left Absolute Motor has an issue." + outputTextRESET);
        }
        if (Robot.BL_absolute.hasActiveFault()) {
-        System.out.println( outputTextRED + "Back Left Absolute Motor has an issue." + outputTextRESET);
+        System.out.println(outputTextRED + "ERROR:" + outputTextRESET + "Back Left Absolute Motor has an issue." + outputTextRESET);
        }
 
        // Back Right Motors
        if (Robot.BR_stearing.hasActiveFault()) {
-        System.out.println(outputTextRED + "Back  Right Stearing Motor has an issue." + outputTextRESET);
+        System.out.println(outputTextRED + "ERROR:" + outputTextRESET + "Back  Right Stearing Motor has an issue." + outputTextRESET);
        }
        if (Robot.BR_absolute.hasActiveFault()) {
-        System.out.println( outputTextRED + "Back Right Absolute Motor has an issue." + outputTextRESET);
+        System.out.println(outputTextRED + "ERROR:" + outputTextRESET +  "Back Right Absolute Motor has an issue." + outputTextRESET);
        }
        if (Robot.BR_absolute.hasActiveFault()) {
-        System.out.println(outputTextRED + "Back Right Absolute Motor has an issue." + outputTextRESET);
+        System.out.println(outputTextRED + "ERROR:" + outputTextRESET + "Back Right Absolute Motor has an issue." + outputTextRESET);
        }
-
-
-
 
     }
+
+
 }
