@@ -134,6 +134,13 @@ public class Constants {
             public static final double      velocityFF      = 0.000;                                                                        // Feed-Forward
             public static final double      velocityMax     = 6000.0;                                                                       // Max Velocity Allowed
             public static final double      accelerationMax = 0.000;                                                                        // Max Acceleration Allowed
+            public static final double      heightAtZero    = 00.00;
+            public static final double      heightMax       = 00.00;
+            public static final double      feeder_Height   = 00.00;
+            public static final double      reef_L1         = 00.00;
+            public static final double      reef_L2         = 00.00;
+            public static final double      reef_L3         = 00.00;
+            public static final double      reef_L4         = 00.00;
         }
         public static final class climber {
 
