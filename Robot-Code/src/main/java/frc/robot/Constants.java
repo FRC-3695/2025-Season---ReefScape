@@ -10,6 +10,8 @@ public class Constants {
     public static final class robot {
         public static final double ROBOT_MASS = (148 - 20.3) * 0.453592;                                                                    // 32lbs * kg per pound
         public static final Matter CHASSIS    = new Matter(new Translation3d(0, 0, Units.inchesToMeters(8)), ROBOT_MASS);        // Frame Size
+        public static final String cameraPosition                   = "";                                                                   // LimeLight3 Mounted to Frame
+        public static final String cameraFeeder                     = "";                                                                   // LimeLight2 Mounted to Manipulator
     }
     public static final class swerve {
         public static final double          LOOP_TIME               = 0.13;                                                                 //ms, 20ms + 110ms sprk max velocity lag {Loop time to get the updated data for swerve system}
@@ -84,7 +86,7 @@ public class Constants {
     public static final class CANnet {                                                                                                      // Can Devices and their associated ID assignments
         public static final int         core_RIO        = 0;
         public static final int         core_PowerHub   = 1;                                                                                // RevRobotics PowerHub
-        public static final int         core_IMU        = 2;                                                                               // CrossTheRoadElectronics Pigeon 2.0
+        public static final int         core_IMU        = 2;                                                                                // CrossTheRoadElectronics Pigeon 2.0
         public static final class swerve {
             public static final int     FL_Stearing     = 11;                                                                               // RevRobotics Vortex Motor w/ Flex Controller
             public static final int     FL_Drive        = 12;                                                                               // RevRobotics Vortex Motor w/ Flex Controller
@@ -143,7 +145,20 @@ public class Constants {
             public static final double      reef_L4         = 00.00;                                                                        // Height required to score Level 4 on Reef
         }
         public static final class climber {
+            public static final double      positionMin     = 00.00;                                                                        // Absolute Encoder Position for Paw Start Position
+            public static final double      positionMax     = 00.00;                                                                        // Absolute Encoder Position for Paw Down
+            public static final double      speedMinClimb   = 00.00;
+            public static final double      speedMaxClimb   = 00.00;
+            public static final double      speedMaxRelease = 00.00;
+        }
+        public static final class visionPosition{
 
         }
-    }          
+        public static final class visionLogic{
+
+        }
+    }
+    public static final class visionPose {
+        
+    }
 }
