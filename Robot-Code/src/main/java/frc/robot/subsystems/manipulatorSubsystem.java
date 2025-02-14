@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 import frc.robot.Constants;
 import frc.robot.Robot;
+import frc.robot.tools.utils;
 
 import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkBase.ControlType;
@@ -79,7 +80,7 @@ public class manipulatorSubsystem extends SubsystemBase {
         SmartDashboard.updateValues();
     }
     private static void dashboardTest() {                                                                                               // Starts and Updates Values if in `Test Function`
-
+        utils.Logging(0, "Elevator Height :"+Robot.elevatorEncoder_LeadAlt.getPosition());
     }
     private static void encoderZero() {                                                                                                 // function to watch for zeroing event
         if(Robot.elevatorSensor_3sZero.get()) {                                                                                         // if reed switch is engaged runs
