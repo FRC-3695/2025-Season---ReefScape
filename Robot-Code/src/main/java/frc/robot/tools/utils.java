@@ -156,6 +156,19 @@ public class utils {
        }
 
     }
+    //Emergency stop function 
+    public static void emergencyStop() {
+    Robot.FL_stearing.set(0);
+    Robot.FR_stearing.set(0);
+    Robot.BL_stearing.set(0);
+    Robot.BR_stearing.set(0);
+    Robot.FL_absolute.set(0);
+    Robot.FR_absolute.set(0);
+    Robot.BL_absolute.set(0);
+    Robot.BR_absolute.set(0);
+    Logging(5, "Emergency stop activated!");
+}
+
 
 
 }
