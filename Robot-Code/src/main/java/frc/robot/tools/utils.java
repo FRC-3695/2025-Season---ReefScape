@@ -2,6 +2,7 @@ package frc.robot.tools;
 import java.text.DecimalFormat;
 //WPILib Libraries
 import edu.wpi.first.hal.HALUtil;
+import frc.robot.Constants;
 import frc.robot.Robot;
 import frc.robot.subsystems.*;
 import edu.wpi.first.wpilibj.RobotBase;
@@ -9,7 +10,6 @@ import edu.wpi.first.wpilibj.RobotBase;
 
 public class utils {
     private static double lastTripRisk;
-    private utils() {}
     // ------------------------------------------------------------------------------------------    Math    ------------------------------------------------------------------------------------------
     public static double map(double x, double in_min, double in_max, double out_min, double out_max) {
         return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
@@ -112,73 +112,74 @@ public class utils {
 
         // Front Left Motors 
 
-       if (Robot.FL_Stearing.hasActiveFault()) {
+       if (Robot.FL_stearing.hasActiveFault()) {
         System.out.println(outputTextRED + "ERROR:" + outputTextRESET + "Front Left Stearing Motor has an issue." );
        }
-       if (Robot.FL_Absolute.hasActiveFault()) {
+       if (Robot.FL_absolute.hasActiveFault()) {
         System.out.println(outputTextRED + "ERROR:" + outputTextRESET + "Front Left Absolute Motor has an issue." + outputTextRESET);
        }
-       if (Robot.FL_Drive.hasActiveFault()) {
+       if (Robot.FL_drive.hasActiveFault()) {
         System.out.println(outputTextRED + "ERROR:" + outputTextRESET +  "Front Left Drive Motor has an issue." + outputTextRESET);
        }
 
        // Frony Right Motors
-       if (Robot.FR_Stearing.hasActiveFault()) {
+       if (Robot.FR_stearing.hasActiveFault()) {
         System.out.println(outputTextRED + "ERROR:" + outputTextRESET + "Front Right Stearing Motor has an issue." + outputTextRESET);
        }
-       if (Robot.FR_Absolute.hasActiveFault()) {
+       if (Robot.FR_absolute.hasActiveFault()) {
         System.out.println(outputTextRED + "ERROR:" + outputTextRESET + "Front Right Absolute Motor has an issue." + outputTextRESET);
        }
-       if (Robot.FR_Drive.hasActiveFault()) {
+       if (Robot.FR_drive.hasActiveFault()) {
         System.out.println(outputTextRED + "ERROR:" + outputTextRESET + "Front Right Drive Motor has an issue." + outputTextRESET);
        }
 
        // Back Left Motors 
-       if (Robot.BL_Stearing.hasActiveFault()) {
+       if (Robot.BL_stearing.hasActiveFault()) {
         System.out.println(outputTextRED + "ERROR:" + outputTextRESET + "Back Left Stearing Motor has an issue." + outputTextRESET);
        }
-       if (Robot.BL_Absolute.hasActiveFault()) {
+       if (Robot.BL_absolute.hasActiveFault()) {
         System.out.println(outputTextRED + "ERROR:" + outputTextRESET + "Back Left Absolute Motor has an issue." + outputTextRESET);
        }
-       if (Robot.BL_Drive.hasActiveFault()) {
+       if (Robot.BL_drive.hasActiveFault()) {
         System.out.println(outputTextRED + "ERROR:" + outputTextRESET + "Back Left Drive Motor has an issue." + outputTextRESET);
        }
 
        // Back Right Motors
-       if (Robot.BR_Stearing.hasActiveFault()) {
+       if (Robot.BR_stearing.hasActiveFault()) {
         System.out.println(outputTextRED + "ERROR:" + outputTextRESET + "Back  Right Stearing Motor has an issue." + outputTextRESET);
        }
-       if (Robot.BR_Absolute.hasActiveFault()) {
+       if (Robot.BR_absolute.hasActiveFault()) {
         System.out.println(outputTextRED + "ERROR:" + outputTextRESET +  "Back Right Absolute Motor has an issue." + outputTextRESET);
        }
-       if (Robot.BR_Drive.hasActiveFault()) {
+       if (Robot.BR_drive.hasActiveFault()) {
         System.out.println(outputTextRED + "ERROR:" + outputTextRESET + "Back Right Drive Motor has an issue." + outputTextRESET);
        }
 
     }
+
+    
     //Emergency stop function 
     public static void emergencyStop() {
-    Robot.FL_Stearing.set(0);
-    Robot.FL_Absolute.set(0);
-    Robot.FL_Drive.set(0);
+    Robot.FL_stearing.set(0);
+    Robot.FL_absolute.set(0);
+    Robot.FL_drive.set(0);
 
-    Robot.FR_Stearing.set(0);
-    Robot.FR_Absolute.set(0);
-    Robot.FR_Drive.set(0);
+    Robot.FR_stearing.set(0);
+    Robot.FR_absolute.set(0);
+    Robot.FR_drive.set(0);
 
-    Robot.BL_Stearing.set(0);
-    Robot.BL_Absolute.set(0);
-    Robot.BL_Drive.set(0);
+    Robot.BL_stearing.set(0);
+    Robot.BL_absolute.set(0);
+    Robot.BL_drive.set(0);
 
-    Robot.BR_Stearing.set(0);
-    Robot.BR_Absolute.set(0);
-    Robot.BR_Drive.set(0);
+    Robot.BR_stearing.set(0);
+    Robot.BR_absolute.set(0);
+    Robot.BR_drive.set(0);
     
     
     Logging(5, "Emergency stop activated!");
-}
-
-
-
+    }
 
 }
+
+
