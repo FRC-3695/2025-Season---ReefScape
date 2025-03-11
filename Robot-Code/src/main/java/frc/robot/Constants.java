@@ -120,8 +120,6 @@ public class Constants {
         public static final int         elevatorCar0    = 1;                                                                                // Optical Sensor on Car (on) when at bottom
         public static final int         coralLoaded     = 2;                                                                                // Optical to catch when coral is completely loaded in manipulator
         public static final int         coralEmpty      = 3;                                                                                // Optical to catch when coral is completely unloaded in manipulator
-        public static final int         climbCageIn     = 4;                                                                                // Optical Sensor to know when cage has settled into climber
-        public static final int         climbCageDown   = 5;                                                                                // 
     }
     public static final class config {
         public static final class elevator {
@@ -142,13 +140,6 @@ public class Constants {
             public static final double      reef_L2         = 00.00;                                                                        // Height required to score Level 2 on Reef
             public static final double      reef_L3         = 00.00;                                                                        // Height required to score Level 3 on Reef
             public static final double      reef_L4         = 00.00;                                                                        // Height required to score Level 4 on Reef
-        }
-        public static final class climber {
-            public static final double      positionMin     = 00.00;                                                                        // Absolute Encoder Position for Paw Start Position
-            public static final double      positionMax     = 00.00;                                                                        // Absolute Encoder Position for Paw Down
-            public static final double      speedMinClimb   = 00.00;
-            public static final double      speedMaxClimb   = 00.00;
-            public static final double      speedMaxRelease = 00.00;
         }
         public static final class visionPosition{
 

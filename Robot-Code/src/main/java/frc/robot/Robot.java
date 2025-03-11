@@ -42,7 +42,6 @@ public class Robot extends TimedRobot {
   public final static SparkMaxConfig    elevatorMotorConfig_Global    = new SparkMaxConfig();
   public final static SparkMaxConfig    elevatorMotorConfig_Lead      = new SparkMaxConfig();
   public final static SparkMaxConfig    elevatorMotorConfig_Follower  = new SparkMaxConfig();
-  public final static SparkFlex         climberMotor_Paw              = new SparkFlex(Constants.CANnet.climber.Paw, MotorType.kBrushless);   
   // -------------------------------------------------------------------------------------    Sensor(s)    --------------------------------------------------------------------------------------
   public final static AbsoluteEncoder   elevatorEncoder_Lead          = elevatorMotor_Lead.getAbsoluteEncoder();
   public final static AbsoluteEncoder   elevatorEncoder_Follower      = elevatorMotor_Follower.getAbsoluteEncoder();
@@ -51,7 +50,6 @@ public class Robot extends TimedRobot {
   public final static DigitalInput      elevatorSensor_CarZero        = new DigitalInput(Constants.sensor.elevatorCar0);                // Optical Sensor to Check that Manipulator is in expected location
   public final static DigitalInput      elevatorSensor_CorLoad        = new DigitalInput(Constants.sensor.coralLoaded);                 // Optical Sensor for Coral Loaded
   public final static DigitalInput      elevatorSensor_CorEmpty       = new DigitalInput(Constants.sensor.coralEmpty);                  // Optical Sensor for Confirming Coral has been Deposited
-  public final static AbsoluteEncoder   climberCodoer_PawEncoder      = climberMotor_Paw.getAbsoluteEncoder();
   // ----------------------------------------------------------------------------------    Other Device(s)    -----------------------------------------------------------------------------------
   public static PowerDistribution powerHub = new PowerDistribution(Constants.CANnet.core_PowerHub, ModuleType.kRev);                    // {@param - powerHub} Power Distribution Hub
   // ----------------------------------------------------------------------------------//    Robot Init    //------------------------------------------------------------------------------------
@@ -142,8 +140,6 @@ public class Robot extends TimedRobot {
     
   }
   // ----------------------------------------------------------------------------------//    Function(s)   //------------------------------------------------------------------------------------
-  public void climberInit() {
-  }
   public void elevatorInit() {
     elevatorMotorConfig_Global                                                                                                          // Global Config for Elevator Motors
       .inverted(false)                                                                                                         // Inverts Motors Motion if Needed
