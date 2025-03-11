@@ -46,7 +46,14 @@ public class Robot extends TimedRobot {
 
   public static final SparkFlex climber_Paw = new SparkFlex(Constants.CANnet.climber.Paw, MotorType.kBrushless);
 
+  public static final CANSparkMax Coral_Feed = new CANSparkMax(Constants.CANnet.manipulators.Coral_Feed, MatorType.kbrushless);
+  public static final CANSparkMax Coral_Tilt = new CANSparkMax(Constants.CANnet.manipulators.Coral_Tilt, MatorType.kbrushless);
+  public static final CANSparkMax Algae_kicker = new CANSparkMax(Constants.CANnet.manipulators.Algae_kicker, MatorType.kbrushless);
+  public static final CANSparkMax Algae_Right = new CANSparkMax(Constants.CANnet.manipulators.Algae_Right, MatorType.kbrushless);
+  public static final CANSparkMax Algae_Left  = new CANSparkMax(Constants.CANnet.manipulators.Algae_Left, MatorType.kbrushless);
 
+
+  
 
 
 

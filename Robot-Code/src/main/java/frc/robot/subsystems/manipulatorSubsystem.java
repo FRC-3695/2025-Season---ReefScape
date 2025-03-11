@@ -15,10 +15,11 @@ public class manipulatorSubsystem extends SubsystemBase {
 
 
     static CommandXboxController operatorDriver = new CommandXboxController(Constants.operatorDriver.port);
-    private final SparkFlex climber_Paw = new SparkFlex(Constants.CANnet.climber.Paw, MotorType.kBrushless);
+    public static final CANSparkMax Coral_Feed = new CANSparkMax(Constants.CANnet.manipulators.Coral_Feed, MatorType.kbrushless);
+
 
     public void periodic() {
         double speed = operatorDriver.getLeftY(); 
-        climber_Paw.set(speed);
+        Coral_Feed.set(speed);
     }
 }
