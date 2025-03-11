@@ -103,6 +103,7 @@ public class Constants {
             public static final int     Lift_Master     = 15;                                                                               // RevRobotics NEO 750 w/ SparkMax Controller and throughbore encoder
             public static final int     Lift_Follower   = 16;                                                                               // RevRobotics NEO 750 w/ SparkMax Controller
         }
+<<<<<<< Updated upstream
         public static final class manipulators {
             public static final int     Coral_Feed      = 35;                                                                               // RevRobotics NEO 750 w/ SparkMax Controller
             public static final int     Coral_Tilt      = 36;                                                                               // RevRobotics NEO 750 w/ SparkMax Controller
@@ -112,6 +113,13 @@ public class Constants {
         }
         public static final class climber {
             public static final int     Paw             = 25;                                                                               // RevRobotics Vortex Motor w/ Flex Controller
+=======
+        public static final class manipulator {
+            public static final int     Coral_Feed      = 35;                                                                               // RevRobotics Vortex Motor w/ Flex Controller
+            public static final int     Algae_kicker    = 36;                                                                               // RevRobotics NEO 750 w/ SparkMax Controller
+            public static final int     Algae_Left      = 50;                                                                               // RevRobotics NEO 550 w/ SparkMax Controller
+            public static final int     Algae_Right     = 51;                                                                               // RevRobotics NEO 550 w/ SparkMax Controller
+>>>>>>> Stashed changes
         }
     }
     public static final class sensor {
