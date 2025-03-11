@@ -45,6 +45,10 @@ public class Robot extends TimedRobot {
   public final static SparkMaxConfig    elevatorMotorConfig_Lead      = new SparkMaxConfig();
   public final static SparkMaxConfig    elevatorMotorConfig_Follower  = new SparkMaxConfig();
   public final static SparkFlex         coralMotor                    = new SparkFlex(Constants.CANnet.manipulator.Coral_Feed, MotorType.kBrushless);
+  public final static SparkFlex         algaeMotorLeft                = new SparkFlex(Constants.CANnet.manipulator.Algae_Left, MotorType.kBrushless);
+  public final static SparkFlex         algaeMotorRight               = new SparkFlex(Constants.CANnet.manipulator.Algae_Right, MotorType.kBrushless);
+  public final static SparkFlex         algaeMotorKicker              = new SparkFlex(Constants.CANnet.manipulator.Algae_kicker, MotorType.kBrushless);
+
   // -------------------------------------------------------------------------------------    Sensor(s)    --------------------------------------------------------------------------------------
   public final static AbsoluteEncoder   elevatorEncoder_Lead          = elevatorMotor_Lead.getAbsoluteEncoder();
   public final static AbsoluteEncoder   elevatorEncoder_Follower      = elevatorMotor_Follower.getAbsoluteEncoder();
@@ -53,6 +57,8 @@ public class Robot extends TimedRobot {
   public final static SparkLimitSwitch  elevatorSensor_Max            = elevatorMotor_Lead.getForwardLimitSwitch();                     // Reed Switch for when Elevator is Fully Deployed
   public final static DigitalInput      elevatorSensor_CorLoad        = new DigitalInput(Constants.sensor.coralLoaded);                 // Optical Sensor for Coral Loaded
   public final static DigitalInput      elevatorSensor_CorEmpty       = new DigitalInput(Constants.sensor.coralEmpty);                  // Optical Sensor for Confirming Coral has been Deposited
+
+
   // ----------------------------------------------------------------------------------    Other Device(s)    -----------------------------------------------------------------------------------
   public static PowerDistribution powerHub = new PowerDistribution(Constants.CANnet.core_PowerHub, ModuleType.kRev);                    // {@param - powerHub} Power Distribution Hub
   // ----------------------------------------------------------------------------------//    Robot Init    //------------------------------------------------------------------------------------

@@ -99,4 +99,6 @@ public class manipulatorSubsystem extends SubsystemBase {
         targetHeight = targetHeight - Constants.config.elevator.heightAtZero;                                                           // Updates target run height to match height from floor              
         elevatorController_Motion.setReference(targetHeight, ControlType.kMAXMotionPositionControl);                                    // Calls Rev Motion MaxMotion with set height Position
     }
+
+
 }
