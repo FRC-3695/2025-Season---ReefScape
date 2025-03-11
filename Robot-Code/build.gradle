@@ -1,6 +1,6 @@
 plugins {
     id "java"
-    id "edu.wpi.first.GradleRIO" version "2025.2.1"
+    id "edu.wpi.first.GradleRIO" version "2025.1.1"
     id "com.peterabeles.gversion" version "1.10"
 }
 
@@ -56,6 +56,7 @@ dependencies {
     annotationProcessor wpi.java.deps.wpilibAnnotations()
     implementation wpi.java.deps.wpilib()
     implementation wpi.java.vendor.java()
+    implementation 'com.acidmanic:console-tools:1.0.0'
 
     roborioDebug wpi.java.deps.wpilibJniDebug(wpi.platforms.roborio)
     roborioDebug wpi.java.vendor.jniDebug(wpi.platforms.roborio)
@@ -102,4 +103,13 @@ wpi.java.configureTestTasks(test)
 // Configure string concat to always inline compile
 tasks.withType(JavaCompile) {
     options.compilerArgs.add '-XDstringConcat=inline'
+}
+project.compileJava.dependsOn(createVersionFile)
+gversion {
+  srcDir       = "src/main/java/"
+  classPackage = "frc.robot"
+  className    = "BuildConstants"
+  dateFormat   = "yyyy-MM-dd HH:mm:ss z"
+  timeZone     = "America/Chicago" // Use preferred time zone
+  indent       = "  "
 }
