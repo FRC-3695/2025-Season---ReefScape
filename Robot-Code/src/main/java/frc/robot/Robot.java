@@ -14,6 +14,8 @@ import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
+import com.revrobotics.spark.SparkLimitSwitch;
+import com.revrobotics.spark.config.LimitSwitchConfig.Type;
 
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -42,12 +44,13 @@ public class Robot extends TimedRobot {
   public final static SparkMaxConfig    elevatorMotorConfig_Global    = new SparkMaxConfig();
   public final static SparkMaxConfig    elevatorMotorConfig_Lead      = new SparkMaxConfig();
   public final static SparkMaxConfig    elevatorMotorConfig_Follower  = new SparkMaxConfig();
+  public final static SparkFlex         coralMotor                    = new SparkFlex(Constants.CANnet.manipulator.Coral_Feed, MotorType.kBrushless);
   // -------------------------------------------------------------------------------------    Sensor(s)    --------------------------------------------------------------------------------------
   public final static AbsoluteEncoder   elevatorEncoder_Lead          = elevatorMotor_Lead.getAbsoluteEncoder();
   public final static AbsoluteEncoder   elevatorEncoder_Follower      = elevatorMotor_Follower.getAbsoluteEncoder();
   public final static RelativeEncoder   elevatorEncoder_LeadAlt       = elevatorMotor_Lead.getAlternateEncoder();
-  public final static DigitalInput      elevatorSensor_3sZero         = new DigitalInput(Constants.sensor.elevator0);                   // Reed Switch for when Elevator is Home
-  public final static DigitalInput      elevatorSensor_CarZero        = new DigitalInput(Constants.sensor.elevatorCar0);                // Optical Sensor to Check that Manipulator is in expected location
+  public final static SparkLimitSwitch  elevatorSensor_Zero           = elevatorMotor_Lead.getReverseLimitSwitch();                     // Reed Switch for when Elevator is Home
+  public final static SparkLimitSwitch  elevatorSensor_Max            = elevatorMotor_Lead.getForwardLimitSwitch();                     // Reed Switch for when Elevator is Fully Deployed
   public final static DigitalInput      elevatorSensor_CorLoad        = new DigitalInput(Constants.sensor.coralLoaded);                 // Optical Sensor for Coral Loaded
   public final static DigitalInput      elevatorSensor_CorEmpty       = new DigitalInput(Constants.sensor.coralEmpty);                  // Optical Sensor for Confirming Coral has been Deposited
   // ----------------------------------------------------------------------------------    Other Device(s)    -----------------------------------------------------------------------------------
@@ -160,8 +163,13 @@ public class Robot extends TimedRobot {
       .allowedClosedLoopError(1, ClosedLoopSlot.kSlot0);                                                                                // Error Lovel `Slot 0`
     elevatorMotorConfig_Lead.apply(elevatorMotorConfig_Global);                                                                         // Applies config from Global Config to Lead Motor Config
     elevatorMotorConfig_Lead.alternateEncoder                                                                                           // Sets config for Alternate Encoder Connected to Lead Motor Controller
-    .positionConversionFactor(Constants.config.elevator.climbRatio)
-    .countsPerRevolution(Constants.config.elevator.altReltEncoder);                                                                     // Steps per Revolution
+      .positionConversionFactor(Constants.config.elevator.climbRatio)                                                                   // Resolution in which a count equals an Inch
+      .countsPerRevolution(Constants.config.elevator.altReltEncoder);                                                                   // Steps per Revolution  
+    elevatorMotorConfig_Lead.limitSwitch                                                                                                // Configuration of Limit Switches
+      .forwardLimitSwitchType(Type.kNormallyOpen)                                                                                       // Sets NC or NO status of Switch
+      .forwardLimitSwitchEnabled(true)                                                                                          // Enables Limit Switch
+      .reverseLimitSwitchType(Type.kNormallyOpen)                                                                                       // Sets NC or NO status of Switch
+      .reverseLimitSwitchEnabled(true);                                                                                         // Enables Limit Switch
     elevatorMotorConfig_Follower                                                                                                        // Elevator Motor Config for Follower
       .apply(elevatorMotorConfig_Global)                                                                                                // Applies config from Global Config to Follwer Motor Config
       .follow(Constants.CANnet.elevator.Lift_Master);                                                                                   // Sets CAN ID for Lead Motor and sets Follower Motor to Follow

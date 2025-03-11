@@ -83,7 +83,7 @@ public class manipulatorSubsystem extends SubsystemBase {
         utils.Logging(0, "Elevator Height :"+Robot.elevatorEncoder_LeadAlt.getPosition());
     }
     private static void encoderZero() {                                                                                                 // function to watch for zeroing event
-        if(Robot.elevatorSensor_3sZero.get()) {                                                                                         // if reed switch is engaged runs
+        if(Robot.elevatorSensor_Zero.isPressed()) {                                                                                         // if reed switch is engaged runs
             Robot.elevatorEncoder_LeadAlt.setPosition(0);                                                                               //updates encoder to zero
             if (lastZerod.isRunning()) {                                                                                                // checks if timer is running
                 lastZerod.restart();                                                                                                    // starts timeer on zeroing event
