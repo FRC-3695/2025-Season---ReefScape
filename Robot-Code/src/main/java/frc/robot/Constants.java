@@ -108,8 +108,8 @@ public class Constants {
         public static final class manipulator {
             public static final int     Coral_Feed      = 35;                                                                               // RevRobotics Vortex Motor w/ Flex Controller
             public static final int     Algae_kicker    = 36;                                                                               // RevRobotics NEO 750 w/ SparkMax Controller
-            public static final int     Algae_Left      = 37;                                                                               // RevRobotics NEO 550 w/ SparkMax Controller
-            public static final int     Algae_Right     = 38;                                                                               // RevRobotics NEO 550 w/ SparkMax Controller
+            public static final int     Algae_Left      = 50;                                                                               // RevRobotics NEO 550 w/ SparkMax Controller
+            public static final int     Algae_Right     = 51;                                                                               // RevRobotics NEO 550 w/ SparkMax Controller
         }
     }
     public static final class sensor {
