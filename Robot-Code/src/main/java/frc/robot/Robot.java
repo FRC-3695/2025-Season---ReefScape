@@ -14,6 +14,8 @@ import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
+import com.revrobotics.spark.SparkLimitSwitch;
+import com.revrobotics.spark.config.LimitSwitchConfig.Type;
 
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -37,24 +39,40 @@ public class Robot extends TimedRobot {
   public final static CommandXboxController operatorDriver = new CommandXboxController(Constants.operatorDriver.port);                  // Driver's xBox controller
   public final static CommandXboxController operatorManip  = new CommandXboxController(Constants.operatorManip.port);                   // Operator's xBox controller
   // --------------------------------------------------------------------------------------    Motor(s)    --------------------------------------------------------------------------------------
-  
+  public final static SparkMax          elevatorMotor_Lead            = new SparkMax(Constants.CANnet.elevator.Lift_Master, MotorType.kBrushless);
+  public final static SparkMax          elevatorMotor_Follower        = new SparkMax(Constants.CANnet.elevator.Lift_Follower, MotorType.kBrushless);
+  public final static SparkMaxConfig    elevatorMotorConfig_Global    = new SparkMaxConfig();
+  public final static SparkMaxConfig    elevatorMotorConfig_Lead      = new SparkMaxConfig();
+  public final static SparkMaxConfig    elevatorMotorConfig_Follower  = new SparkMaxConfig();
+  public final static SparkFlex         coralMotor                    = new SparkFlex(Constants.CANnet.manipulator.Coral_Feed, MotorType.kBrushless);
   // -------------------------------------------------------------------------------------    Sensor(s)    --------------------------------------------------------------------------------------
-  
+  public final static AbsoluteEncoder   elevatorEncoder_Lead          = elevatorMotor_Lead.getAbsoluteEncoder();
+  public final static AbsoluteEncoder   elevatorEncoder_Follower      = elevatorMotor_Follower.getAbsoluteEncoder();
+  public final static RelativeEncoder   elevatorEncoder_LeadAlt       = elevatorMotor_Lead.getAlternateEncoder();
+  public final static SparkLimitSwitch  elevatorSensor_Zero           = elevatorMotor_Lead.getReverseLimitSwitch();                     // Reed Switch for when Elevator is Home
+  public final static SparkLimitSwitch  elevatorSensor_Max            = elevatorMotor_Lead.getForwardLimitSwitch();                     // Reed Switch for when Elevator is Fully Deployed
+  public final static DigitalInput      elevatorSensor_CorLoad        = new DigitalInput(Constants.sensor.coralLoaded);                 // Optical Sensor for Coral Loaded
+  public final static DigitalInput      elevatorSensor_CorEmpty       = new DigitalInput(Constants.sensor.coralEmpty);                  // Optical Sensor for Confirming Coral has been Deposited
   // ----------------------------------------------------------------------------------    Other Device(s)    -----------------------------------------------------------------------------------
   public static PowerDistribution powerHub = new PowerDistribution(Constants.CANnet.core_PowerHub, ModuleType.kRev);                    // {@param - powerHub} Power Distribution Hub
   // ----------------------------------------------------------------------------------//    Robot Init    //------------------------------------------------------------------------------------
- 
   @Override
   public void robotInit() {                                                                                                             // Called on robot startup, best use is for anything needed to prep robot and ensure std. start state
-    m_robotContainer = new RobotContainer();
+    utils.GitInfo();                                                                                                                    // Displays current git status build on robot start
+    m_robotContainer = new RobotContainer();                                                                                            // Setup RobotContainer
     disabledTimer = new Timer();                                                                                                        // Create a timer to disable motor brake a few seconds after disable.  This will let the robot stop immediately when disabled, but then also let it be pushed
     if (isSimulation()) {                                                                                                               // Checks to see if code is running in simulation
       DriverStation.silenceJoystickConnectionWarning(true);                                                                     // -> Silences Joystick Connection Warning
     }
-    if (utils.RoboRIOid() == "compBot2024") {
-      elevatorInit();
+    switch (utils.RoboRIOid()) {                                                                                                        // Gets roboRio Identity {@param defaultSwitchCase}
+      case "compBot2024":                                                                                                               // *> Runs for Competition Robot then >> default
+        elevatorInit();
+      case "devBot2024":                                                                                                                // *> Runs for Development Robot then >> default
+        elevatorInit();
+      default:                                                                                                                          // *> Runs if Switch Case's not met or for Case's that are not broken on call
+
+        break;
     }
-    utils.GitInfo();                                                                                                                    // Displays current git status build on robot start
   }
   // ---------------------------------------------------------------------------------//    Robot Prdic    //------------------------------------------------------------------------------------
   @Override
@@ -102,13 +120,16 @@ public class Robot extends TimedRobot {
   }
   // ----------------------------------------------------------------------------------//    Tele Prdic    //------------------------------------------------------------------------------------
   @Override
-  public void teleopPeriodic() {}
+  public void teleopPeriodic() {
+
+  }
   // -----------------------------------------------------------------------------------//    Tele Exit    //------------------------------------------------------------------------------------
   @Override
   public void teleopExit() {}
   // -----------------------------------------------------------------------------------//    Test Init    //------------------------------------------------------------------------------------
   @Override
   public void testInit() {
+    utils.debugEnable(true);                                                                                                            // Debug Enabled Automaticly during Test
     CommandScheduler.getInstance().cancelAll();
   }
   // ----------------------------------------------------------------------------------//    Test Prdic    //------------------------------------------------------------------------------------
@@ -118,25 +139,11 @@ public class Robot extends TimedRobot {
   }
   // -----------------------------------------------------------------------------------//    Test Exit    //------------------------------------------------------------------------------------
   @Override
-  public void testExit() {}
-  // ----------------------------------------------------------------------------------//    Function(s)   //------------------------------------------------------------------------------------
-  public void climberInit() {
-    final SparkFlex         climberMotor_Paw              = new SparkFlex(Constants.CANnet.climber.Paw, MotorType.kBrushless);
-    final AbsoluteEncoder   climberCodoer_PawEncoder      = climberMotor_Paw.getAbsoluteEncoder();
+  public void testExit() {
+    
   }
+  // ----------------------------------------------------------------------------------//    Function(s)   //------------------------------------------------------------------------------------
   public void elevatorInit() {
-    final SparkMax          elevatorMotor_Lead            = new SparkMax(Constants.CANnet.elevator.Lift_Master, MotorType.kBrushless);
-    final SparkMax          elevatorMotor_Follower        = new SparkMax(Constants.CANnet.elevator.Lift_Follower, MotorType.kBrushless);
-    final AbsoluteEncoder   elevatorEncoder_Lead          = elevatorMotor_Lead.getAbsoluteEncoder();
-    final AbsoluteEncoder   elevatorEncoder_Follower      = elevatorMotor_Follower.getAbsoluteEncoder();
-    final RelativeEncoder   elevatorEncoder_LeadAlt       = elevatorMotor_Lead.getAlternateEncoder();
-    final DigitalInput      elevatorSensor_3sZero         = new DigitalInput(Constants.sensor.elevator0);                               // Reed Switch for when Elevator is Home
-    final DigitalInput      elevatorSensor_CarZero        = new DigitalInput(Constants.sensor.elevatorCar0);                            // Optical Sensor to Check that Manipulator is in expected location
-    final DigitalInput      elevatorSensor_CorLoad        = new DigitalInput(Constants.sensor.coralLoaded);                             // Optical Sensor for Coral Loaded
-    final DigitalInput      elevatorSensor_CorEmpty       = new DigitalInput(Constants.sensor.coralEmpty);                              // Optical Sensor for Confirming Coral has been Deposited
-    final SparkMaxConfig    elevatorMotorConfig_Global    = new SparkMaxConfig();
-    final SparkMaxConfig    elevatorMotorConfig_Lead      = new SparkMaxConfig();
-    final SparkMaxConfig    elevatorMotorConfig_Follower  = new SparkMaxConfig();
     elevatorMotorConfig_Global                                                                                                          // Global Config for Elevator Motors
       .inverted(false)                                                                                                         // Inverts Motors Motion if Needed
       .smartCurrentLimit(Constants.config.elevator.stallAmp)                                                                            // Sets Stall Amperage for Motor
@@ -156,8 +163,13 @@ public class Robot extends TimedRobot {
       .allowedClosedLoopError(1, ClosedLoopSlot.kSlot0);                                                                                // Error Lovel `Slot 0`
     elevatorMotorConfig_Lead.apply(elevatorMotorConfig_Global);                                                                         // Applies config from Global Config to Lead Motor Config
     elevatorMotorConfig_Lead.alternateEncoder                                                                                           // Sets config for Alternate Encoder Connected to Lead Motor Controller
-    .positionConversionFactor(Constants.config.elevator.climbRatio)
-    .countsPerRevolution(Constants.config.elevator.altReltEncoder);                                                                     // Steps per Revolution
+      .positionConversionFactor(Constants.config.elevator.climbRatio)                                                                   // Resolution in which a count equals an Inch
+      .countsPerRevolution(Constants.config.elevator.altReltEncoder);                                                                   // Steps per Revolution  
+    elevatorMotorConfig_Lead.limitSwitch                                                                                                // Configuration of Limit Switches
+      .forwardLimitSwitchType(Type.kNormallyOpen)                                                                                       // Sets NC or NO status of Switch
+      .forwardLimitSwitchEnabled(true)                                                                                          // Enables Limit Switch
+      .reverseLimitSwitchType(Type.kNormallyOpen)                                                                                       // Sets NC or NO status of Switch
+      .reverseLimitSwitchEnabled(true);                                                                                         // Enables Limit Switch
     elevatorMotorConfig_Follower                                                                                                        // Elevator Motor Config for Follower
       .apply(elevatorMotorConfig_Global)                                                                                                // Applies config from Global Config to Follwer Motor Config
       .follow(Constants.CANnet.elevator.Lift_Master);                                                                                   // Sets CAN ID for Lead Motor and sets Follower Motor to Follow
@@ -165,9 +177,5 @@ public class Robot extends TimedRobot {
     elevatorMotor_Lead.configure(elevatorMotorConfig_Lead, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);             // Loads config to Elevator Lead Motor
     elevatorMotor_Follower.clearFaults();                                                                                               // Clears Sticky Faults from Secondary Elevator Motor Controller
     elevatorMotor_Follower.configure(elevatorMotorConfig_Follower, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);     // Loads config to Elevator Follower Motor
-  
-    }
-  public void sensorConfig() {
-    
   }
 }

@@ -10,6 +10,8 @@ public class Constants {
     public static final class robot {
         public static final double ROBOT_MASS = (148 - 20.3) * 0.453592;                                                                    // 32lbs * kg per pound
         public static final Matter CHASSIS    = new Matter(new Translation3d(0, 0, Units.inchesToMeters(8)), ROBOT_MASS);        // Frame Size
+        public static final String cameraPosition                   = "";                                                                   // LimeLight3 Mounted to Frame
+        public static final String cameraFeeder                     = "";                                                                   // LimeLight2 Mounted to Manipulator
     }
     public static final class swerve {
         public static final double          LOOP_TIME               = 0.13;                                                                 //ms, 20ms + 110ms sprk max velocity lag {Loop time to get the updated data for swerve system}
@@ -84,7 +86,7 @@ public class Constants {
     public static final class CANnet {                                                                                                      // Can Devices and their associated ID assignments
         public static final int         core_RIO        = 0;
         public static final int         core_PowerHub   = 1;                                                                                // RevRobotics PowerHub
-        public static final int         core_IMU        = 2;                                                                               // CrossTheRoadElectronics Pigeon 2.0
+        public static final int         core_IMU        = 2;                                                                                // CrossTheRoadElectronics Pigeon 2.0
         public static final class swerve {
             public static final int     FL_Stearing     = 11;                                                                               // RevRobotics Vortex Motor w/ Flex Controller
             public static final int     FL_Drive        = 12;                                                                               // RevRobotics Vortex Motor w/ Flex Controller
@@ -103,24 +105,16 @@ public class Constants {
             public static final int     Lift_Master     = 15;                                                                               // RevRobotics NEO 750 w/ SparkMax Controller and throughbore encoder
             public static final int     Lift_Follower   = 16;                                                                               // RevRobotics NEO 750 w/ SparkMax Controller
         }
-        public static final class manipulators {
-            public static final int     Coral_Feed      = 35;                                                                               // RevRobotics NEO 750 w/ SparkMax Controller
-            public static final int     Coral_Tilt      = 36;                                                                               // RevRobotics NEO 750 w/ SparkMax Controller
-            public static final int     Algae_kicker    = 37;                                                                               // RevRobotics NEO 750 w/ SparkMax Controller
-            public static final int     Algae_Left      = 38;                                                                               // RevRobotics NEO 550 w/ SparkMax Controller
-            public static final int     Algae_Right     = 39;                                                                               // RevRobotics NEO 550 w/ SparkMax Controller
-        }
-        public static final class climber {
-            public static final int     Paw             = 25;                                                                               // RevRobotics Vortex Motor w/ Flex Controller
+        public static final class manipulator {
+            public static final int     Coral_Feed      = 35;                                                                               // RevRobotics Vortex Motor w/ Flex Controller
+            public static final int     Algae_kicker    = 36;                                                                               // RevRobotics NEO 750 w/ SparkMax Controller
+            public static final int     Algae_Left      = 37;                                                                               // RevRobotics NEO 550 w/ SparkMax Controller
+            public static final int     Algae_Right     = 38;                                                                               // RevRobotics NEO 550 w/ SparkMax Controller
         }
     }
     public static final class sensor {
-        public static final int         elevator0       = 0;                                                                                // Reed Switch Sensor on 3rd Stage (on) when at bottom
-        public static final int         elevatorCar0    = 1;                                                                                // Optical Sensor on Car (on) when at bottom
-        public static final int         coralLoaded     = 2;                                                                                // Optical to catch when coral is completely loaded in manipulator
-        public static final int         coralEmpty      = 3;                                                                                // Optical to catch when coral is completely unloaded in manipulator
-        public static final int         climbCageIn     = 4;                                                                                // Optical Sensor to know when cage has settled into climber
-        public static final int         climbCageDown   = 5;                                                                                // 
+        public static final int         coralLoaded     = 0;                                                                                // Optical to catch when coral is completely loaded in manipulator
+        public static final int         coralEmpty      = 1;                                                                                // Optical to catch when coral is completely unloaded in manipulator                                                                                // 
     }
     public static final class config {
         public static final class elevator {
@@ -134,9 +128,22 @@ public class Constants {
             public static final double      velocityFF      = 0.000;                                                                        // Feed-Forward
             public static final double      velocityMax     = 6000.0;                                                                       // Max Velocity Allowed
             public static final double      accelerationMax = 0.000;                                                                        // Max Acceleration Allowed
+            public static final double      heightAtZero    = 00.00;                                                                        // Height of coral cage at lowest point
+            public static final double      heightMax       = 00.00;                                                                        // Max travel of elevator from 0 position
+            public static final double      feeder_Height   = 00.00;                                                                        // Height required to receive coral pieces from feeder
+            public static final double      reef_L1         = 00.00;                                                                        // Height required to score Level 1 on Reef
+            public static final double      reef_L2         = 00.00;                                                                        // Height required to score Level 2 on Reef
+            public static final double      reef_L3         = 00.00;                                                                        // Height required to score Level 3 on Reef
+            public static final double      reef_L4         = 00.00;                                                                        // Height required to score Level 4 on Reef
         }
-        public static final class climber {
+        public static final class visionPosition{
 
         }
-    }          
+        public static final class visionLogic{
+
+        }
+    }
+    public static final class visionPose {
+        
+    }
 }
