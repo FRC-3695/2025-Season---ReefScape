@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 import frc.robot.Constants;
 import frc.robot.Robot;
+import frc.robot.Constants.operatorDriver;
 import frc.robot.tools.utils;
 
 import com.revrobotics.spark.SparkClosedLoopController;
@@ -12,6 +13,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+
+
+
+
 
 public class manipulatorSubsystem extends SubsystemBase {
     private static Timer lastZerod                                              = new Timer();                                          // {@param elevatorZero_lapsedTime} Time Elapsed Since Last Zero'd
@@ -70,7 +77,11 @@ public class manipulatorSubsystem extends SubsystemBase {
             dashboardTest();
         }
         encoderZero();
+
+        //algaeManip();
     }
+
+    
     // ------------------------------------------------------------------------------------    Functions    -------------------------------------------------------------------------------------
     private static void dashboardUpdate() {                                                                                             // Updates Dashboard Data
         SmartDashboard.putNumber("elevator/height", Robot.elevatorEncoder_LeadAlt.getPosition());                                   // Gives callout of current height
@@ -98,6 +109,12 @@ public class manipulatorSubsystem extends SubsystemBase {
     private static void runToTarget(double targetHeight) {                                                                              // Runs to height from floor
         targetHeight = targetHeight - Constants.config.elevator.heightAtZero;                                                           // Updates target run height to match height from floor              
         elevatorController_Motion.setReference(targetHeight, ControlType.kMAXMotionPositionControl);                                    // Calls Rev Motion MaxMotion with set height Position
+    }
+
+    private static void algaeManip() {
+        double speed = Robot.operatorManip.getLeftY();
+        Robot.algaeMotorLeft.set(speed);
+        Robot.algaeMotorRight.set(speed);
     }
 
 
