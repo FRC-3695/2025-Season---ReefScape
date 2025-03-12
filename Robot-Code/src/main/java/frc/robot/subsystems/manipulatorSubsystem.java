@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 import frc.robot.Constants;
 import frc.robot.Robot;
 import frc.robot.Constants.operatorDriver;
+import frc.robot.Constants.operatorManip;
 import frc.robot.tools.utils;
 
 import com.revrobotics.spark.SparkClosedLoopController;
@@ -115,7 +116,10 @@ public class manipulatorSubsystem extends SubsystemBase {
         double speed = Robot.operatorManip.getLeftY();
         Robot.algaeMotorLeft.set(speed);
         Robot.algaeMotorRight.set(speed);
+
+        double kicker_Speed = Robot.operatorManip.getRightTriggerAxis();
+        Robot.algaeMotorKicker.set(kicker_Speed);
+        }
+
     }
 
-
-}
