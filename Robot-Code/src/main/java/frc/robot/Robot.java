@@ -68,7 +68,6 @@ public class Robot extends TimedRobot {
       case "compBot2024":                                                                                                               // *> Runs for Competition Robot then >> default
         elevatorInit();
       case "devBot2024":                                                                                                                // *> Runs for Development Robot then >> default
-        elevatorInit();
       default:                                                                                                                          // *> Runs if Switch Case's not met or for Case's that are not broken on call
 
         break;
