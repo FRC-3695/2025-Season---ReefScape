@@ -20,7 +20,7 @@ public class Constants {
         public static final PIDConstants    AUTO_Angle_PID          = new PIDConstants(0.4, 0, 0.01);                              //
         public static final double          WHEEL_LOCK_TIME         = 10;                                                                   //s, Time till wheels return to breaking mode and stop PID's after x seconds
         public static final double          wheelDiameter           = 4;                                                                    //in, Diameter of wheels in the swerve modules
-        public static final double          gearRatio_Stearing      = 12.8;                                                                 // Ratio's upper number for swerve modules steering
+        public static final double          gearRatio_Stearing      = 18.75;                                                                 // Ratio's upper number for swerve modules steering
         public static final class PathFinding {                                                                                             // Constraints placed on drive train during PathPlanner Autonomous Actions
             public static final double      velocity                = Units.feetToMeters(12.5);                                        //ft, Max Velocity Allowed
             public static final double      acceleration            = 4.0;                                                                  // Max Acceleration
@@ -102,14 +102,13 @@ public class Constants {
             public static final int     BR_Absolute     = 43;                                                                               // CrossTheRoadElectronics CanCoder
         }
         public static final class elevator {
-            public static final int     Lift_Master     = 15;                                                                               // RevRobotics NEO 750 w/ SparkMax Controller and throughbore encoder
-            public static final int     Lift_Follower   = 16;                                                                               // RevRobotics NEO 750 w/ SparkMax Controller
+            public static final int     Lift_Master     = 51;                                                                               // RevRobotics NEO 750 w/ SparkMax Controller and throughbore encoder
+            public static final int     Lift_Follower   = 52;                                                                               // RevRobotics NEO 750 w/ SparkMax Controller
         }
-        public static final class manipulator {
-            public static final int     Coral_Feed      = 35;                                                                               // RevRobotics Vortex Motor w/ Flex Controller
-            public static final int     Algae_kicker    = 36;                                                                               // RevRobotics NEO 750 w/ SparkMax Controller
-            public static final int     Algae_Left      = 50;                                                                               // RevRobotics NEO 550 w/ SparkMax Controller
-            public static final int     Algae_Right     = 51;                                                                               // RevRobotics NEO 550 w/ SparkMax Controller
+        public static final class manipulators {
+            public static final int     Coral_Feed      = 50;                                                                               // RevRobotics NEO 750 w/ SparkMax Controller
+            public static final int     Algae_Intake    = 53;                                                                               // RevRobotics NEO 750 w/ SparkMax Controller                                                                              // RevRobotics NEO 550 w/ SparkMax Controller
+            public static final int     Algae_Feed      = 54;
         }
     }
     public static final class sensor {
@@ -120,6 +119,8 @@ public class Constants {
         public static final class elevator {
             public static final int         stallAmp        = 50;                                                                           // Stall Amps
             public static final int         altReltEncoder  = 8192;                                                                         // Encoder Steps per Revolution for Throughbore Encoder
+            public static final double      output_Max      = 0.5;                                                                          // Max output power range for controller
+            public static final double      output_Min      = -0.5;                                                                         // Min output power range for controller
             public static final double      ratioGearBox    = 6;                                                                            // Single Stage gear box with 6:1 Ratio by RevRobotics
             public static final double      climbRatio      = 0;                                                                            // Conversion Factor
             public static final double      PIDF_P          = 0.001;                                                                        // Proportional

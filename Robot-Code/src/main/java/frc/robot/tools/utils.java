@@ -109,7 +109,7 @@ public class utils {
                 return "Comp_Bot-2023";
             case "031b5237":
                 return "devBot2024";
-            case "1":
+            case "0322389A":
                 return "compBot2024";
             case "32238c5":
                 return "Caroline_Rogue-One";
