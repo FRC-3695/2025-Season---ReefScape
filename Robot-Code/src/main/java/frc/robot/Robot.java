@@ -10,6 +10,7 @@ import com.revrobotics.spark.ClosedLoopSlot;
 import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkLowLevel.*;
+import com.revrobotics.spark.config.SparkFlexConfig;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.SparkBase.PersistMode;
@@ -44,7 +45,8 @@ public class Robot extends TimedRobot {
   public final static SparkMaxConfig    elevatorMotorConfig_Global    = new SparkMaxConfig();
   public final static SparkMaxConfig    elevatorMotorConfig_Lead      = new SparkMaxConfig();
   public final static SparkMaxConfig    elevatorMotorConfig_Follower  = new SparkMaxConfig();
-  public final static SparkFlex         coralMotor                    = new SparkFlex(Constants.CANnet.manipulator.Coral_Feed, MotorType.kBrushless);
+  public final static SparkFlex         coralMotor                    = new SparkFlex(Constants.CANnet.manipulators.Coral_Feed, MotorType.kBrushless);
+  public final static SparkFlexConfig   coralMotorConfig              = new SparkFlexConfig();
   // -------------------------------------------------------------------------------------    Sensor(s)    --------------------------------------------------------------------------------------
   public final static AbsoluteEncoder   elevatorEncoder_Lead          = elevatorMotor_Lead.getAbsoluteEncoder();
   public final static AbsoluteEncoder   elevatorEncoder_Follower      = elevatorMotor_Follower.getAbsoluteEncoder();
@@ -176,5 +178,13 @@ public class Robot extends TimedRobot {
     elevatorMotor_Lead.configure(elevatorMotorConfig_Lead, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);             // Loads config to Elevator Lead Motor
     elevatorMotor_Follower.clearFaults();                                                                                               // Clears Sticky Faults from Secondary Elevator Motor Controller
     elevatorMotor_Follower.configure(elevatorMotorConfig_Follower, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);     // Loads config to Elevator Follower Motor
+  }
+  public void coralInit() {
+    coralMotorConfig
+      .inverted(isAutonomous())
+      .smartCurrentLimit(Constants.config.coral.stallAmp)
+      .idleMode(IdleMode.kCoast);
+    coralMotor.clearFaults();
+    coralMotor.configure(coralMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
   }
 }
