@@ -31,6 +31,7 @@ public class utils {
                     System.out.print(" - Debug - ");
                     System.out.println(event);
                 }
+                
                 break;
             case 1:
                 Console.setScreenAttributes(Terminal.Constants.FOREGROUND_BLUE, Terminal.Constants.BACKGROUND_BLACK);
