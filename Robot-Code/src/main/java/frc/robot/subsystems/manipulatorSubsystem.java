@@ -91,6 +91,8 @@ public class manipulatorSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("elevator/lastUpdatedZero", lastZerod.get());                                                      // Counts time from last zeroing event
         SmartDashboard.putNumber("elevator/zeroingEvents", elevatorZero);                                                           // Count of times zeroing has occured
         SmartDashboard.updateValues();
+        SmartDashboard.putNumber("algae/arm",  Robot.algaeMotorIntakeEncoder.getPosition());
+
     }
     private static void dashboardTest() {                                                                                               // Starts and Updates Values if in `Test Function`
         utils.Logging(0, "Elevator Height :"+Robot.elevatorEncoder_LeadAlt.getPosition());
@@ -116,10 +118,14 @@ public class manipulatorSubsystem extends SubsystemBase {
     private static void algaeManip() {
         double manip_Speed = Robot.operatorManip.getLeftY();
         Robot.algaeMotorIntake.set(manip_Speed);
-
         double kicker_Speed = Robot.operatorManip.getRightTriggerAxis();
         Robot.algaeMotorFeed.set(kicker_Speed);
         }
 
+        // 360 degree 
+        // 90 degree rotation 
+        // that would be 25% of 360 
+        // 100 encoder rotations is 1 rotation
+        // 
     }
 

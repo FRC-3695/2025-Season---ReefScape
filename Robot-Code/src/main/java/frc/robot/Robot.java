@@ -47,6 +47,7 @@ public class Robot extends TimedRobot {
   public final static SparkFlex         coralMotor                    = new SparkFlex(Constants.CANnet.manipulators.Coral_Feed, MotorType.kBrushless);
   public final static SparkFlex         algaeMotorIntake              = new SparkFlex(Constants.CANnet.manipulators.Algae_Intake, MotorType.kBrushless);
   public final static SparkFlex         algaeMotorFeed                = new SparkFlex(Constants.CANnet.manipulators.Algae_Feed, MotorType.kBrushless);
+  public final static AbsoluteEncoder   algaeMotorIntakeEncoder       = algaeMotorIntake.getAbsoluteEncoder();
 
   // -------------------------------------------------------------------------------------    Sensor(s)    --------------------------------------------------------------------------------------
   public final static AbsoluteEncoder   elevatorEncoder_Lead          = elevatorMotor_Lead.getAbsoluteEncoder();
