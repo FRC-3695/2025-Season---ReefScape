@@ -85,6 +85,7 @@ public class Robot extends TimedRobot {
   @Override
   public void robotPeriodic() {                                                                                                         // Called every (20ms) in all modes, this is triggered after mode specific periodics
     CommandScheduler.getInstance().run();
+   
   }
   // -----------------------------------------------------------------------------------//    Stop Init    //------------------------------------------------------------------------------------
   @Override
@@ -124,6 +125,8 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+
+    AlgaeInit();
   }
   // ----------------------------------------------------------------------------------//    Tele Prdic    //------------------------------------------------------------------------------------
   @Override
@@ -187,39 +190,9 @@ public class Robot extends TimedRobot {
   }
 
   public void AlgaeInit() {
-    elevatorMotorConfig_Global                                                                                                          // Global Config for Elevator Motors
+    algaeMotorIntakeConfig_Global
       .inverted(false)                                                                                                         // Inverts Motors Motion if Needed
-      .smartCurrentLimit(Constants.config.elevator.stallAmp)                                                                            // Sets Stall Amperage for Motor
-      .idleMode(IdleMode.kBrake);                                                                                                       // Sets Braking Mode
-    elevatorMotorConfig_Global.closedLoop                                                                                               // Global Config for Elevator Motors Closed Loop
-      .pid(                                                                                                                             // PID Config `Slot 0`
-        Constants.config.elevator.PIDF_P,
-        Constants.config.elevator.PIDF_I,
-        Constants.config.elevator.PIDF_D,
-        ClosedLoopSlot.kSlot0
-      )
-      .velocityFF(Constants.config.elevator.velocityFF, ClosedLoopSlot.kSlot0)                                                          // Velocity Feed Forward Config `Slot 0`
-      .outputRange(0, 1, ClosedLoopSlot.kSlot0);                                                                                        // Output Range Config `Slot 0`
-    elevatorMotorConfig_Global.closedLoop.maxMotion                                                                                     // Global Config for Elevator MAX Motion by RevRobotics
-      .maxAcceleration(Constants.config.elevator.accelerationMax, ClosedLoopSlot.kSlot0)                                                // Acceleration Mac `Slot 0`
-      .maxVelocity(Constants.config.elevator.velocityMax, ClosedLoopSlot.kSlot0)                                                        // Velocity Max `Slot 0`
-      .allowedClosedLoopError(1, ClosedLoopSlot.kSlot0);                                                                                // Error Lovel `Slot 0`
-    elevatorMotorConfig_Lead.apply(elevatorMotorConfig_Global);                                                                         // Applies config from Global Config to Lead Motor Config
-    elevatorMotorConfig_Lead.alternateEncoder                                                                                           // Sets config for Alternate Encoder Connected to Lead Motor Controller
-      .positionConversionFactor(Constants.config.elevator.climbRatio)                                                                   // Resolution in which a count equals an Inch
-      .countsPerRevolution(Constants.config.elevator.altReltEncoder);                                                                   // Steps per Revolution  
-    elevatorMotorConfig_Lead.limitSwitch                                                                                                // Configuration of Limit Switches
-      .forwardLimitSwitchType(Type.kNormallyOpen)                                                                                       // Sets NC or NO status of Switch
-      .forwardLimitSwitchEnabled(true)                                                                                          // Enables Limit Switch
-      .reverseLimitSwitchType(Type.kNormallyOpen)                                                                                       // Sets NC or NO status of Switch
-      .reverseLimitSwitchEnabled(true);                                                                                         // Enables Limit Switch
-    elevatorMotorConfig_Follower                                                                                                        // Elevator Motor Config for Follower
-      .apply(elevatorMotorConfig_Global)                                                                                                // Applies config from Global Config to Follwer Motor Config
-      .follow(Constants.CANnet.elevator.Lift_Master);                                                                                   // Sets CAN ID for Lead Motor and sets Follower Motor to Follow
-    elevatorMotor_Lead.clearFaults();                                                                                                   // Clears Sticky Faults from Lead Elevator Motor Controller
-    elevatorMotor_Lead.configure(elevatorMotorConfig_Lead, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);             // Loads config to Elevator Lead Motor
-    elevatorMotor_Follower.clearFaults();                                                                                               // Clears Sticky Faults from Secondary Elevator Motor Controller
-    elevatorMotor_Follower.configure(elevatorMotorConfig_Follower, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);     // Loads config to Elevator Follower Motor
+      .idleMode(IdleMode.kCoast);                                                                                                                        // Global Config for Elevator Motors
   }
 
 

@@ -96,14 +96,14 @@ public class manipulatorSubsystem extends SubsystemBase {
     
     // ------------------------------------------------------------------------------------    Functions    -------------------------------------------------------------------------------------
     private static void dashboardUpdate() {                                                                                             // Updates Dashboard Data
-        SmartDashboard.putNumber("manipulator/elevator/height", Robot.elevatorEncoder_Lead.getPosition());                                   // Gives callout of current height
-        SmartDashboard.putNumber("manipulator/elevator/motionSpeed", Robot.elevatorMotor_Lead.get());                                           // Gives speed of elevator currently running
-        SmartDashboard.putNumber("manipulator/elevator/lastUpdatedZero", lastZerod.get());                                                      // Counts time from last zeroing event
-        SmartDashboard.putNumber("manipulator/elevator/zeroingEvents", elevatorZero);                                                           // Count of times zeroing has occured
+        SmartDashboard.putNumber("manipulator/elevator/height", Robot.elevatorEncoder_Lead.getPosition());                          // Gives callout of current height
+        SmartDashboard.putNumber("manipulator/elevator/motionSpeed", Robot.elevatorMotor_Lead.get());                               // Gives speed of elevator currently running
+        SmartDashboard.putNumber("manipulator/elevator/lastUpdatedZero", lastZerod.get());                                          // Counts time from last zeroing event
+        SmartDashboard.putNumber("manipulator/elevator/zeroingEvents", elevatorZero);                                               // Count of times zeroing has occured
         SmartDashboard.putBoolean("manipulator/coral/load", Robot.elevatorSensor_CorLoad.get());
         SmartDashboard.putBoolean("manipulator/coral/clear", Robot.elevatorSensor_CorEmpty.get());
         SmartDashboard.updateValues();
-        SmartDashboard.putNumber("manipulator/algae/intake",  Robot.algaeMotorIntakeEncoder.getPosition());
+        SmartDashboard.putNumber("manipulator/algae/intake",  Robot.algaeMotorIntakeEncoder.getPosition());                         // Algae Motor Intake Encoder to set up correct amount of motor rotations               
 
     }
     private static void dashboardTest() {                                                                                               // Starts and Updates Values if in `Test Function`
@@ -127,7 +127,7 @@ public class manipulatorSubsystem extends SubsystemBase {
         elevatorController_Motion.setReference(targetHeight, ControlType.kMAXMotionPositionControl);                                    // Calls Rev Motion MaxMotion with set height Position
     }
 
-    private static void algaeManip() {
+    private static void algaeManip() {                                                                                                  // Function to manipulate the algae arm 
         double manip_Speed = Robot.operatorManip.getLeftY();
         Robot.algaeMotorIntake.set(manip_Speed);
         double kicker_Speed = Robot.operatorManip.getRightTriggerAxis();
