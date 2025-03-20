@@ -48,9 +48,7 @@ public class Robot extends TimedRobot {
   public final static SparkFlex         coralMotor                    = new SparkFlex(Constants.CANnet.manipulators.Coral_Feed, MotorType.kBrushless);
   public final static SparkFlexConfig   coralMotorConfig              = new SparkFlexConfig();
   // -------------------------------------------------------------------------------------    Sensor(s)    --------------------------------------------------------------------------------------
-  public final static AbsoluteEncoder   elevatorEncoder_Lead          = elevatorMotor_Lead.getAbsoluteEncoder();
-  public final static AbsoluteEncoder   elevatorEncoder_Follower      = elevatorMotor_Follower.getAbsoluteEncoder();
-  public final static RelativeEncoder   elevatorEncoder_LeadAlt       = elevatorMotor_Lead.getAlternateEncoder();
+  public final static RelativeEncoder   elevatorEncoder_Lead          = elevatorMotor_Lead.getEncoder();
   public final static SparkLimitSwitch  elevatorSensor_Zero           = elevatorMotor_Lead.getReverseLimitSwitch();                     // Reed Switch for when Elevator is Home
   public final static SparkLimitSwitch  elevatorSensor_Max            = elevatorMotor_Lead.getForwardLimitSwitch();                     // Reed Switch for when Elevator is Fully Deployed
   public final static DigitalInput      elevatorSensor_CorLoad        = new DigitalInput(Constants.sensor.coralLoaded);                 // Optical Sensor for Coral Loaded
@@ -163,9 +161,6 @@ public class Robot extends TimedRobot {
       .maxVelocity(Constants.config.elevator.velocityMax, ClosedLoopSlot.kSlot0)                                                        // Velocity Max `Slot 0`
       .allowedClosedLoopError(1, ClosedLoopSlot.kSlot0);                                                                                // Error Lovel `Slot 0`
     elevatorMotorConfig_Lead.apply(elevatorMotorConfig_Global);                                                                         // Applies config from Global Config to Lead Motor Config
-    elevatorMotorConfig_Lead.alternateEncoder                                                                                           // Sets config for Alternate Encoder Connected to Lead Motor Controller
-      .positionConversionFactor(Constants.config.elevator.climbRatio)                                                                   // Resolution in which a count equals an Inch
-      .countsPerRevolution(Constants.config.elevator.altReltEncoder);                                                                   // Steps per Revolution  
     elevatorMotorConfig_Lead.limitSwitch                                                                                                // Configuration of Limit Switches
       .forwardLimitSwitchType(Type.kNormallyOpen)                                                                                       // Sets NC or NO status of Switch
       .forwardLimitSwitchEnabled(true)                                                                                          // Enables Limit Switch

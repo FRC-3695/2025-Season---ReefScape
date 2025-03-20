@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import frc.robot.subsystems.manipulatorSubsystem;
 import frc.robot.subsystems.swervedrive.swerveSubsystem;
 import frc.robot.tools.utils;
 import swervelib.SwerveInputStream;
@@ -20,6 +21,7 @@ import edu.wpi.first.wpilibj2.command.Commands;
 public class RobotContainer {
 
   public static final swerveSubsystem drivebase = new swerveSubsystem(new File(Filesystem.getDeployDirectory(), "swerve/"+utils.RoboRIOid()));             // The robot's swerve drive subsystems and commands are defined here
+  public static final manipulatorSubsystem manip = new manipulatorSubsystem();
   SwerveInputStream driveAngularVelocity = SwerveInputStream.of(                                                                        // Converts driver input into a field-relative ChassisSpeeds that is controlled by angular velocity.
     drivebase.getSwerveDrive(),
     () -> Robot.operatorDriver.getLeftY() * -1,

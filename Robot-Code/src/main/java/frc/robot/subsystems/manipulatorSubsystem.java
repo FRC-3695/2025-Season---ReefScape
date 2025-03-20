@@ -8,6 +8,8 @@ import com.revrobotics.spark.SparkBase.ControlType;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardComponent;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -20,6 +22,11 @@ public class manipulatorSubsystem extends SubsystemBase {
     // ------------------------------------------------------------------------------------    Command(s)    ------------------------------------------------------------------------------------
     public Command autoFeederIntake() {                                                                                                 // 
         return run(() ->{
+            if (Robot.elevatorSensor_CorLoad.get()) {
+                
+            } else if (Robot.elevatorSensor_CorEmpty.get()) {
+
+            }
         });
     }
     public Command autoScore(int level) {                                                                                               // 
@@ -43,15 +50,18 @@ public class manipulatorSubsystem extends SubsystemBase {
             }
         });
     }
-    public Command manualElevatorUp() {                                                                                                 // Manually raises elevator
+    public Command manualElevator(double motionFeed) {                                                                                                 // Manually raises elevator
         return run(() ->{
+            if (motionFeed > 0 && !Robot.elevatorSensor_Max.isPressed()) {
+
+            } else if (motionFeed < 0 && !Robot.elevatorSensor_Zero.isPressed()) {
+
+            } else {
+
+            }
         });
     }
-    public Command manualElevatorDown() {                                                                                               // Manually lowers elevator
-        return run(() ->{
-        });
-    }
-    public Command manualFeed() {                                                                                                       // Manually feeds coral into coral manipulator
+    public Command manualFeed(double motionFeed) {                                                                                                       // Manually feeds coral into coral manipulator
         return run(() ->{
         });
     }
@@ -73,18 +83,20 @@ public class manipulatorSubsystem extends SubsystemBase {
     }
     // ------------------------------------------------------------------------------------    Functions    -------------------------------------------------------------------------------------
     private static void dashboardUpdate() {                                                                                             // Updates Dashboard Data
-        SmartDashboard.putNumber("elevator/height", Robot.elevatorEncoder_LeadAlt.getPosition());                                   // Gives callout of current height
-        SmartDashboard.putNumber("elevator/motionSpeed", Robot.elevatorMotor_Lead.get());                                           // Gives speed of elevator currently running
-        SmartDashboard.putNumber("elevator/lastUpdatedZero", lastZerod.get());                                                      // Counts time from last zeroing event
-        SmartDashboard.putNumber("elevator/zeroingEvents", elevatorZero);                                                           // Count of times zeroing has occured
+        SmartDashboard.putNumber("manipulator/elevator/height", Robot.elevatorEncoder_Lead.getPosition());                                   // Gives callout of current height
+        SmartDashboard.putNumber("manipulator/elevator/motionSpeed", Robot.elevatorMotor_Lead.get());                                           // Gives speed of elevator currently running
+        SmartDashboard.putNumber("manipulator/elevator/lastUpdatedZero", lastZerod.get());                                                      // Counts time from last zeroing event
+        SmartDashboard.putNumber("manipulator/elevator/zeroingEvents", elevatorZero);                                                           // Count of times zeroing has occured
+        SmartDashboard.putBoolean("manipulator/coral/load", Robot.elevatorSensor_CorLoad.get());
+        SmartDashboard.putBoolean("manipulator/coral/clear", Robot.elevatorSensor_CorEmpty.get());
         SmartDashboard.updateValues();
     }
     private static void dashboardTest() {                                                                                               // Starts and Updates Values if in `Test Function`
-        utils.Logging(0, "Elevator Height :"+Robot.elevatorEncoder_LeadAlt.getPosition());
+        utils.Logging(0, "Elevator Height :"+Robot.elevatorEncoder_Lead.getPosition());
     }
     private static void encoderZero() {                                                                                                 // function to watch for zeroing event
         if(Robot.elevatorSensor_Zero.isPressed()) {                                                                                         // if reed switch is engaged runs
-            Robot.elevatorEncoder_LeadAlt.setPosition(0);                                                                               //updates encoder to zero
+            Robot.elevatorEncoder_Lead.setPosition(0);                                                                               //updates encoder to zero
             if (lastZerod.isRunning()) {                                                                                                // checks if timer is running
                 lastZerod.restart();                                                                                                    // starts timeer on zeroing event
             } else {
