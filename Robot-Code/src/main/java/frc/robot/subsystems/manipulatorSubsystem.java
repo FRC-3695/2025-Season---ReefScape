@@ -25,15 +25,30 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 public class manipulatorSubsystem extends SubsystemBase {
     private static Timer lastZerod                                              = new Timer();                                          // {@param elevatorZero_lapsedTime} Time Elapsed Since Last Zero'd
+    private static Timer intakeRunTimer                                         = new Timer();
     private static int elevatorZero                                             = 0;                                                    // {@param elevatorZero_Count} ++ for every zero reset
     private static SparkClosedLoopController elevatorController_Motion          = Robot.elevatorMotor_Lead.getClosedLoopController();   // Retrievs Rev MaxMotion Closed Loop Controller                   
     // ------------------------------------------------------------------------------------    Command(s)    ------------------------------------------------------------------------------------
+    public Command idle() {                                                                                                      // Holds Parts Idle
+        return run(() ->{
+            Robot.coralMotor.set(0);
+        });
+    }
     public Command autoFeederIntake() {                                                                                                 // 
         return run(() ->{
-            if (Robot.elevatorSensor_CorLoad.get()) {
-                
-            } else if (Robot.elevatorSensor_CorEmpty.get()) {
-
+            utils.Logging(4, "Intake");
+            if (!Robot.elevatorSensor_CorLoad.get()) {
+                while(!Robot.elevatorSensor_CorLoad.get()) {
+                    Robot.coralMotor.set(Constants.config.coral.autoFeed);
+                }
+                Robot.coralMotor.set(0);
+            } else if (Robot.elevatorSensor_CorLoad.get()) {
+                while(Robot.elevatorSensor_CorEmpty.get()) {
+                    Robot.coralMotor.set(Constants.config.coral.autoEject);
+                }
+                Robot.coralMotor.set(0);
+            } else {
+                Robot.coralMotor.set(0);
             }
         });
     }
@@ -132,12 +147,12 @@ public class manipulatorSubsystem extends SubsystemBase {
         Robot.algaeMotorIntake.set(manip_Speed);
         double kicker_Speed = Robot.operatorManip.getRightTriggerAxis();
         Robot.algaeMotorFeed.set(kicker_Speed);
-        }
+    }
 
         // 360 degree 
         // 90 degree rotation 
         // that would be 25% of 360 
         // 100 encoder rotations is 1 rotation
         // 
-    }
 
+}

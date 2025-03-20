@@ -21,7 +21,7 @@ import edu.wpi.first.wpilibj2.command.Commands;
 public class RobotContainer {
 
   public static final swerveSubsystem drivebase = new swerveSubsystem(new File(Filesystem.getDeployDirectory(), "swerve/"+utils.RoboRIOid()));             // The robot's swerve drive subsystems and commands are defined here
-  public static final manipulatorSubsystem manip = new manipulatorSubsystem();
+  public static final manipulatorSubsystem manipulator = new manipulatorSubsystem();
   SwerveInputStream driveAngularVelocity = SwerveInputStream.of(                                                                        // Converts driver input into a field-relative ChassisSpeeds that is controlled by angular velocity.
     drivebase.getSwerveDrive(),
     () -> Robot.operatorDriver.getLeftY() * -1,
@@ -60,7 +60,9 @@ public class RobotContainer {
     } else {                                                                                                                            // During Driver Station Teleop mode set controller binding to
       Robot.operatorDriver.a().onTrue((Commands.none()));
       Robot.operatorDriver.b().onTrue((Commands.none()));
-      Robot.operatorDriver.x().onTrue((Commands.none()));
+      Robot.operatorDriver.x().onTrue(manipulator.autoFeederIntake());
+      Robot.operatorDriver.x().onFalse(manipulator.idle());
+
       Robot.operatorDriver.y().onTrue((Commands.runOnce(drivebase::zeroGyro)));
       Robot.operatorDriver.start().onTrue((Commands.none()));
       Robot.operatorDriver.back().onTrue((Commands.none()));
