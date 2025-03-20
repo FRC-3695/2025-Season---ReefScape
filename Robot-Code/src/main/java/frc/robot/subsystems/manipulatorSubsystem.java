@@ -115,11 +115,10 @@ public class manipulatorSubsystem extends SubsystemBase {
 
     private static void algaeManip() {
         double manip_Speed = Robot.operatorManip.getLeftY();
-        Robot.algaeMotorLeft.set(manip_Speed);
-        Robot.algaeMotorRight.set(manip_Speed);
+        Robot.algaeMotorIntake.set(manip_Speed);
 
         double kicker_Speed = Robot.operatorManip.getRightTriggerAxis();
-        Robot.algaeMotorKicker.set(kicker_Speed);
+        Robot.algaeMotorFeed.set(kicker_Speed);
         }
 
     }
