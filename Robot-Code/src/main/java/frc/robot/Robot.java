@@ -47,6 +47,8 @@ public class Robot extends TimedRobot {
   public final static SparkFlex         coralMotor                    = new SparkFlex(Constants.CANnet.manipulators.Coral_Feed, MotorType.kBrushless);
   public final static SparkFlex         algaeMotorIntake              = new SparkFlex(Constants.CANnet.manipulators.Algae_Intake, MotorType.kBrushless);
   public final static SparkFlex         algaeMotorFeed                = new SparkFlex(Constants.CANnet.manipulators.Algae_Feed, MotorType.kBrushless);
+  public final static SparkMaxConfig    algaeMotorIntakeConfig_Global = new SparkMaxConfig();
+
   public final static AbsoluteEncoder   algaeMotorIntakeEncoder       = algaeMotorIntake.getAbsoluteEncoder();
 
   // -------------------------------------------------------------------------------------    Sensor(s)    --------------------------------------------------------------------------------------
@@ -183,4 +185,43 @@ public class Robot extends TimedRobot {
     elevatorMotor_Follower.clearFaults();                                                                                               // Clears Sticky Faults from Secondary Elevator Motor Controller
     elevatorMotor_Follower.configure(elevatorMotorConfig_Follower, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);     // Loads config to Elevator Follower Motor
   }
+
+  public void AlgaeInit() {
+    elevatorMotorConfig_Global                                                                                                          // Global Config for Elevator Motors
+      .inverted(false)                                                                                                         // Inverts Motors Motion if Needed
+      .smartCurrentLimit(Constants.config.elevator.stallAmp)                                                                            // Sets Stall Amperage for Motor
+      .idleMode(IdleMode.kBrake);                                                                                                       // Sets Braking Mode
+    elevatorMotorConfig_Global.closedLoop                                                                                               // Global Config for Elevator Motors Closed Loop
+      .pid(                                                                                                                             // PID Config `Slot 0`
+        Constants.config.elevator.PIDF_P,
+        Constants.config.elevator.PIDF_I,
+        Constants.config.elevator.PIDF_D,
+        ClosedLoopSlot.kSlot0
+      )
+      .velocityFF(Constants.config.elevator.velocityFF, ClosedLoopSlot.kSlot0)                                                          // Velocity Feed Forward Config `Slot 0`
+      .outputRange(0, 1, ClosedLoopSlot.kSlot0);                                                                                        // Output Range Config `Slot 0`
+    elevatorMotorConfig_Global.closedLoop.maxMotion                                                                                     // Global Config for Elevator MAX Motion by RevRobotics
+      .maxAcceleration(Constants.config.elevator.accelerationMax, ClosedLoopSlot.kSlot0)                                                // Acceleration Mac `Slot 0`
+      .maxVelocity(Constants.config.elevator.velocityMax, ClosedLoopSlot.kSlot0)                                                        // Velocity Max `Slot 0`
+      .allowedClosedLoopError(1, ClosedLoopSlot.kSlot0);                                                                                // Error Lovel `Slot 0`
+    elevatorMotorConfig_Lead.apply(elevatorMotorConfig_Global);                                                                         // Applies config from Global Config to Lead Motor Config
+    elevatorMotorConfig_Lead.alternateEncoder                                                                                           // Sets config for Alternate Encoder Connected to Lead Motor Controller
+      .positionConversionFactor(Constants.config.elevator.climbRatio)                                                                   // Resolution in which a count equals an Inch
+      .countsPerRevolution(Constants.config.elevator.altReltEncoder);                                                                   // Steps per Revolution  
+    elevatorMotorConfig_Lead.limitSwitch                                                                                                // Configuration of Limit Switches
+      .forwardLimitSwitchType(Type.kNormallyOpen)                                                                                       // Sets NC or NO status of Switch
+      .forwardLimitSwitchEnabled(true)                                                                                          // Enables Limit Switch
+      .reverseLimitSwitchType(Type.kNormallyOpen)                                                                                       // Sets NC or NO status of Switch
+      .reverseLimitSwitchEnabled(true);                                                                                         // Enables Limit Switch
+    elevatorMotorConfig_Follower                                                                                                        // Elevator Motor Config for Follower
+      .apply(elevatorMotorConfig_Global)                                                                                                // Applies config from Global Config to Follwer Motor Config
+      .follow(Constants.CANnet.elevator.Lift_Master);                                                                                   // Sets CAN ID for Lead Motor and sets Follower Motor to Follow
+    elevatorMotor_Lead.clearFaults();                                                                                                   // Clears Sticky Faults from Lead Elevator Motor Controller
+    elevatorMotor_Lead.configure(elevatorMotorConfig_Lead, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);             // Loads config to Elevator Lead Motor
+    elevatorMotor_Follower.clearFaults();                                                                                               // Clears Sticky Faults from Secondary Elevator Motor Controller
+    elevatorMotor_Follower.configure(elevatorMotorConfig_Follower, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);     // Loads config to Elevator Follower Motor
+  }
+
+
+  
 }
