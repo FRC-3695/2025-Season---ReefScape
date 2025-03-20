@@ -25,6 +25,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.subsystems.manipulatorSubsystem;
 import frc.robot.tools.utils;
 import swervelib.math.SwerveMath;
 import edu.wpi.first.wpilibj.Timer;
@@ -49,7 +50,7 @@ public class Robot extends TimedRobot {
   public final static SparkFlex         algaeMotorFeed                = new SparkFlex(Constants.CANnet.manipulators.Algae_Feed, MotorType.kBrushless);
   public final static SparkMaxConfig    algaeMotorIntakeConfig_Global = new SparkMaxConfig();
 
-  public final static AbsoluteEncoder   algaeMotorIntakeEncoder       = algaeMotorIntake.getAbsoluteEncoder();
+  public final static RelativeEncoder   algaeMotorIntakeEncoder       = algaeMotorIntake.getEncoder();
 
   // -------------------------------------------------------------------------------------    Sensor(s)    --------------------------------------------------------------------------------------
   public final static AbsoluteEncoder   elevatorEncoder_Lead          = elevatorMotor_Lead.getAbsoluteEncoder();
@@ -125,13 +126,14 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
-
+    Robot.algaeMotorIntakeEncoder.setPosition(0);
     AlgaeInit();
+
   }
   // ----------------------------------------------------------------------------------//    Tele Prdic    //------------------------------------------------------------------------------------
   @Override
   public void teleopPeriodic() {
-
+      manipulatorSubsystem.algaeManip();
   }
   // -----------------------------------------------------------------------------------//    Tele Exit    //------------------------------------------------------------------------------------
   @Override
@@ -196,5 +198,4 @@ public class Robot extends TimedRobot {
   }
 
 
-  
 }
