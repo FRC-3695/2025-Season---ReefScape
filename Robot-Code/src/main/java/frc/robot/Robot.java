@@ -71,6 +71,7 @@ public class Robot extends TimedRobot {
     switch (utils.RoboRIOid()) {                                                                                                        // Gets roboRio Identity {@param defaultSwitchCase}
       case "compBot2024":                                                                                                               // *> Runs for Competition Robot then >> default
         elevatorInit();
+        coralInit();
       case "devBot2024":                                                                                                                // *> Runs for Development Robot then >> default
       default:                                                                                                                          // *> Runs if Switch Case's not met or for Case's that are not broken on call
 
