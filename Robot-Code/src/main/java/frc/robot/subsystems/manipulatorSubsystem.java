@@ -36,20 +36,24 @@ public class manipulatorSubsystem extends SubsystemBase {
     }
     public Command autoFeederIntake() {                                                                                                 // 
         return run(() ->{
+            intakeRunTimer.reset();
             utils.Logging(4, "Intake");
             if (!Robot.elevatorSensor_CorLoad.get()) {
-                while(!Robot.elevatorSensor_CorLoad.get()) {
+                intakeRunTimer.start();
+                while(!Robot.elevatorSensor_CorLoad.get() && intakeRunTimer.get() < 5.0) {
                     Robot.coralMotor.set(Constants.config.coral.autoFeed);
                 }
                 Robot.coralMotor.set(0);
             } else if (Robot.elevatorSensor_CorLoad.get()) {
-                while(Robot.elevatorSensor_CorEmpty.get()) {
+                intakeRunTimer.start();
+                while(Robot.elevatorSensor_CorEmpty.get() && intakeRunTimer.get() < 1.5) {
                     Robot.coralMotor.set(Constants.config.coral.autoEject);
                 }
                 Robot.coralMotor.set(0);
             } else {
                 Robot.coralMotor.set(0);
             }
+            intakeRunTimer.stop();
         });
     }
     public Command autoScore(int level) {                                                                                               // 
