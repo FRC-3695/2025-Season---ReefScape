@@ -103,7 +103,7 @@ public class manipulatorSubsystem extends SubsystemBase {
         SmartDashboard.putBoolean("manipulator/coral/load", Robot.elevatorSensor_CorLoad.get());
         SmartDashboard.putBoolean("manipulator/coral/clear", Robot.elevatorSensor_CorEmpty.get());
         SmartDashboard.updateValues();
-        SmartDashboard.putNumber("algae/arm",  Robot.algaeMotorIntakeEncoder.getPosition());
+        SmartDashboard.putNumber("manipulator/algae/intake",  Robot.algaeMotorIntakeEncoder.getPosition());
 
     }
     private static void dashboardTest() {                                                                                               // Starts and Updates Values if in `Test Function`
