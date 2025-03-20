@@ -137,10 +137,13 @@ public class Constants {
             public static final double      reef_L3         = 00.00;                                                                        // Height required to score Level 3 on Reef
             public static final double      reef_L4         = 00.00;                                                                        // Height required to score Level 4 on Reef
         }
-        public static final class visionPosition{
+        public static final class coral {
+            public static final int         stallAmp        = 30;                                                                           // Stall Amps
+        }
+        public static final class visionPosition {
 
         }
-        public static final class visionLogic{
+        public static final class visionLogic {
 
         }
     }
