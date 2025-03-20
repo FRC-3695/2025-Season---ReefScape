@@ -44,10 +44,9 @@ public class Robot extends TimedRobot {
   public final static SparkMaxConfig    elevatorMotorConfig_Global    = new SparkMaxConfig();
   public final static SparkMaxConfig    elevatorMotorConfig_Lead      = new SparkMaxConfig();
   public final static SparkMaxConfig    elevatorMotorConfig_Follower  = new SparkMaxConfig();
-  public final static SparkFlex         coralMotor                    = new SparkFlex(Constants.CANnet.manipulator.Coral_Feed, MotorType.kBrushless);
-  public final static SparkFlex         algaeMotorLeft                = new SparkFlex(Constants.CANnet.manipulator.Algae_Left, MotorType.kBrushless);
-  public final static SparkFlex         algaeMotorRight               = new SparkFlex(Constants.CANnet.manipulator.Algae_Right, MotorType.kBrushless);
-  public final static SparkFlex         algaeMotorKicker              = new SparkFlex(Constants.CANnet.manipulator.Algae_kicker, MotorType.kBrushless);
+  public final static SparkFlex         coralMotor                    = new SparkFlex(Constants.CANnet.manipulators.Coral_Feed, MotorType.kBrushless);
+  public final static SparkFlex         algaeMotorLeft                = new SparkFlex(Constants.CANnet.manipulators.Algae_Intake, MotorType.kBrushless);
+  public final static SparkFlex         algaeMotorRight               = new SparkFlex(Constants.CANnet.manipulators.Algae_Feed, MotorType.kBrushless);
 
   // -------------------------------------------------------------------------------------    Sensor(s)    --------------------------------------------------------------------------------------
   public final static AbsoluteEncoder   elevatorEncoder_Lead          = elevatorMotor_Lead.getAbsoluteEncoder();
