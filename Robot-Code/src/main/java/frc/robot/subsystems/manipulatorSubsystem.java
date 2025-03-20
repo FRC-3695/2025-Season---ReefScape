@@ -102,8 +102,8 @@ public class manipulatorSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("manipulator/elevator/zeroingEvents", elevatorZero);                                                           // Count of times zeroing has occured
         SmartDashboard.putBoolean("manipulator/coral/load", Robot.elevatorSensor_CorLoad.get());
         SmartDashboard.putBoolean("manipulator/coral/clear", Robot.elevatorSensor_CorEmpty.get());
+        SmartDashboard.putNumber("manipulator/algae/arm",  Robot.algaeMotorIntakeEncoder.getPosition());
         SmartDashboard.updateValues();
-        SmartDashboard.putNumber("algae/arm",  Robot.algaeMotorIntakeEncoder.getPosition());
 
     }
     private static void dashboardTest() {                                                                                               // Starts and Updates Values if in `Test Function`
