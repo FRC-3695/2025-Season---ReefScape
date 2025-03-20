@@ -127,7 +127,7 @@ public class manipulatorSubsystem extends SubsystemBase {
         elevatorController_Motion.setReference(targetHeight, ControlType.kMAXMotionPositionControl);                                    // Calls Rev Motion MaxMotion with set height Position
     }
 
-    private static void algaeManip() {                                                                                                  // Function to manipulate the algae arm 
+    public static void algaeManip() {                                                                                                  // Function to manipulate the algae arm 
         double manip_Speed = Robot.operatorManip.getLeftY();
         Robot.algaeMotorIntake.set(manip_Speed);
         double kicker_Speed = Robot.operatorManip.getRightTriggerAxis();
