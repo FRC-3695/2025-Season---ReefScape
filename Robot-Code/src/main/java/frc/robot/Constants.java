@@ -139,6 +139,16 @@ public class Constants {
         }
         public static final class coral {
             public static final int         stallAmp        = 30;                                                                           // Stall Amps
+            public static final double      autoFeed        = -00.40;
+            public static final double      autoEject       = 01.00;
+        }
+
+        public static final class algae {
+            public static final double      autoAlgaeFeed        = -00.40;
+            public static final double      autoAlgaeEject       = 01.00;
+            public static final double      algaeFeederMaxSpeed  = 0.8;
+            public static final double     algaeIntakeMaxSpeed   = 0.8;
+       
         }
         public static final class visionPosition {
 

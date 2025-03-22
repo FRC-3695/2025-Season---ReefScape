@@ -194,7 +194,7 @@ public class Robot extends TimedRobot {
   public void AlgaeInit() {
     algaeMotorIntakeConfig_Global
       .inverted(false)                                                                                                         // Inverts Motors Motion if Needed
-      .idleMode(IdleMode.kCoast);                                                                                                                        // Global Config for Elevator Motors
+      .idleMode(IdleMode.kCoast);                                                                                                                       // Global Config for Elevator Motors
   }
 
 

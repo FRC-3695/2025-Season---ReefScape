@@ -77,6 +77,32 @@ public class manipulatorSubsystem extends SubsystemBase {
         return run(() ->{
         });
     }
+
+    // public Command autoAlgaeFeeder() {                                                                                                 // 
+    //     return run(() ->{
+    //         utils.Logging(4, "Intake");
+    //         if (!Robot.elevatorSensor_CorLoad.get()) {
+    //             while(!Robot.elevatorSensor_CorLoad.get()) {
+    //                 Robot.coralMotor.set(Constants.config.algae.autoAlgaeFeed);
+    //             }
+    //             Robot.coralMotor.set(0);
+    //         } else if (Robot.elevatorSensor_CorLoad.get()) {
+    //             while(Robot.elevatorSensor_CorEmpty.get()) {
+    //                 Robot.coralMotor.set(Constants.config.algae.autoAlgaeEject);
+    //             }
+    //             Robot.coralMotor.set(0);
+    //         } else {
+    //             Robot.coralMotor.set(0);
+    //         }
+    //     });
+    // }
+
+    // public Command algaeFeed(double algaeFeed) {                                                                                                       // Manually feeds coral into coral manipulator
+    //     return run(() ->{
+    //     });
+    // }
+
+        
     // -----------------------------------------------------------------------------------    Periodic(s)    ------------------------------------------------------------------------------------
     public manipulatorSubsystem() {                                                                                                     // Creates Manipulator Subsystem AKA: Initialization
         
@@ -129,15 +155,34 @@ public class manipulatorSubsystem extends SubsystemBase {
 
     public static void algaeManip() {                                                                                                  // Function to manipulate the algae arm 
         double manip_Speed = Robot.operatorManip.getLeftY();
-        Robot.algaeMotorIntake.set(manip_Speed);
-        double kicker_Speed = Robot.operatorManip.getRightTriggerAxis();
+        double intake_Speed = Robot.operatorManip.getRightTriggerAxis();
+        double puke_Speed  = Robot.operatorManip.get
+        if (Robot.algaeMotorFeed.get() >= Constants.config.algae.algaeFeederMaxSpeed) {
+            Robot.algaeMotorFeed.set(Constants.config.algae.algaeFeederMaxSpeed);
+        }
         Robot.algaeMotorFeed.set(kicker_Speed);
+
+        if (Robot.algaeMotorIntake.get() >= Constants.config.algae.algaeIntakeMaxSpeed) {
+            Robot.algaeMotorIntake.set(Constants.config.algae.algaeIntakeMaxSpeed);
+        }
+        Robot.algaeMotorIntake.set(manip_Speed);
+
+        if (Robot.algaeMotorIntake.get() >= Constants.config.algae.algaeIntakeMaxSpeed) {
+            Robot.algaeMotorIntake.set(Constants.config.algae.algaeIntakeMaxSpeed);
+        }
+        Robot.algaeMotorIntake.set(manip_Speed);
+
+
+
         }
 
-        // 360 degree 
+
+        }
+
+        // 360 degree
         // 90 degree rotation 
         // that would be 25% of 360 
         // 100 encoder rotations is 1 rotation
         // 
-    }
+    
 
