@@ -59,10 +59,10 @@ public class RobotContainer {
       Robot.operatorDriver.rightBumper().onTrue(Commands.none());
     } else {                                                                                                                            // During Driver Station Teleop mode set controller binding to
       Robot.operatorDriver.a().onTrue((Commands.none()));
-      Robot.operatorDriver.b().onTrue((Commands.none()));
+      Robot.operatorDriver.b().onTrue(manipulator.autoScore(2));
+      Robot.operatorDriver.b().onFalse(manipulator.idle());
       Robot.operatorDriver.x().onTrue(manipulator.autoFeederIntake());
       Robot.operatorDriver.x().onFalse(manipulator.idle());
-
       Robot.operatorDriver.y().onTrue((Commands.runOnce(drivebase::zeroGyro)));
       Robot.operatorDriver.start().onTrue((Commands.none()));
       Robot.operatorDriver.back().onTrue((Commands.none()));

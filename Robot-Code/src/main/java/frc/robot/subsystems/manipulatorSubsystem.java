@@ -6,6 +6,7 @@ import frc.robot.Constants.operatorManip;
 import frc.robot.tools.utils;
 
 import com.revrobotics.spark.SparkClosedLoopController;
+import com.revrobotics.spark.ClosedLoopSlot;
 import com.revrobotics.spark.SparkBase.ControlType;
 
 import edu.wpi.first.wpilibj.DriverStation;
@@ -58,18 +59,23 @@ public class manipulatorSubsystem extends SubsystemBase {
     }
     public Command autoScore(int level) {                                                                                               // 
         return run(() ->{
+            utils.Logging(4, "Elevator Floor: "+level);
             switch (level) {
                 case 1:                                                                                                                 // 
                     runToTarget(Constants.config.elevator.reef_L1 - Constants.config.elevator.heightAtZero);
+                    utils.Logging(3, "Height: "+ (Constants.config.elevator.reef_L1 - Constants.config.elevator.heightAtZero));
                     break;
                 case 2:                                                                                                                 // 
                     runToTarget(Constants.config.elevator.reef_L2 - Constants.config.elevator.heightAtZero);
+                    utils.Logging(3, "Height: "+ (Constants.config.elevator.reef_L2 - Constants.config.elevator.heightAtZero));
                     break;
                 case 3:                                                                                                                 // 
                     runToTarget(Constants.config.elevator.reef_L3 - Constants.config.elevator.heightAtZero);
+                    utils.Logging(3, "Height: "+ (Constants.config.elevator.reef_L3 - Constants.config.elevator.heightAtZero));
                     break;
                 case 4:                                                                                                                 // 
                     runToTarget(Constants.config.elevator.reef_L4 - Constants.config.elevator.heightAtZero);
+                    utils.Logging(3, "Height: "+ (Constants.config.elevator.reef_L4 - Constants.config.elevator.heightAtZero));
                     break;
                 default:                                                                                                                // 
                     runToTarget(0);
@@ -94,6 +100,15 @@ public class manipulatorSubsystem extends SubsystemBase {
     }
     public Command manualScore() {                                                                                                      // Manually scores coral from coral manipulator
         return run(() ->{
+        });
+    }
+    public Command algaeAuto() {
+        return run(() ->{
+            if (Robot.algaeSensor_Capture.get()) {
+
+            } else {
+                
+            }
         });
     }
     // -----------------------------------------------------------------------------------    Periodic(s)    ------------------------------------------------------------------------------------
@@ -143,7 +158,7 @@ public class manipulatorSubsystem extends SubsystemBase {
     }
     private static void runToTarget(double targetHeight) {                                                                              // Runs to height from floor
         targetHeight = targetHeight - Constants.config.elevator.heightAtZero;                                                           // Updates target run height to match height from floor              
-        elevatorController_Motion.setReference(targetHeight, ControlType.kMAXMotionPositionControl);                                    // Calls Rev Motion MaxMotion with set height Position
+        elevatorController_Motion.setReference(targetHeight, ControlType.kMAXMotionPositionControl, ClosedLoopSlot.kSlot0);                                    // Calls Rev Motion MaxMotion with set height Position
     }
 
     private static void algaeManip() {

@@ -16,6 +16,7 @@ import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkLimitSwitch;
+import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
 import com.revrobotics.spark.config.LimitSwitchConfig.Type;
 
 import edu.wpi.first.math.util.Units;
@@ -56,6 +57,7 @@ public class Robot extends TimedRobot {
   public final static DigitalInput      elevatorSensor_CorLoad        = new DigitalInput(Constants.sensor.coralLoaded);                 // Optical Sensor for Coral Loaded
   public final static DigitalInput      elevatorSensor_CorEmpty       = new DigitalInput(Constants.sensor.coralEmpty);                  // Optical Sensor for Confirming Coral has been Deposited
   public final static AbsoluteEncoder   algaeMotorIntakeEncoder       = algaeMotorIntake.getAbsoluteEncoder();
+  public final static DigitalInput      algaeSensor_Capture           = new DigitalInput(Constants.sensor.algaeLoaded);
 
   // ----------------------------------------------------------------------------------    Other Device(s)    -----------------------------------------------------------------------------------
   public static PowerDistribution powerHub = new PowerDistribution(Constants.CANnet.core_PowerHub, ModuleType.kRev);                    // {@param - powerHub} Power Distribution Hub
@@ -152,20 +154,23 @@ public class Robot extends TimedRobot {
       .inverted(false)                                                                                                         // Inverts Motors Motion if Needed
       .smartCurrentLimit(Constants.config.elevator.stallAmp)                                                                            // Sets Stall Amperage for Motor
       .idleMode(IdleMode.kBrake);                                                                                                       // Sets Braking Mode
-    elevatorMotorConfig_Global.closedLoop                                                                                               // Global Config for Elevator Motors Closed Loop
+    elevatorMotorConfig_Global.closedLoop 
+      .feedbackSensor(FeedbackSensor.kPrimaryEncoder)                                                                                              // Global Config for Elevator Motors Closed Loop
       .pid(                                                                                                                             // PID Config `Slot 0`
         Constants.config.elevator.PIDF_P,
         Constants.config.elevator.PIDF_I,
         Constants.config.elevator.PIDF_D,
         ClosedLoopSlot.kSlot0
       )
-      .velocityFF(Constants.config.elevator.velocityFF, ClosedLoopSlot.kSlot0)                                                          // Velocity Feed Forward Config `Slot 0`
-      .outputRange(0, 1, ClosedLoopSlot.kSlot0);                                                                                        // Output Range Config `Slot 0`
+      //.velocityFF(Constants.config.elevator.velocityFF, ClosedLoopSlot.kSlot0)                                                          // Velocity Feed Forward Config `Slot 0`
+      .outputRange(Constants.config.elevator.output_Min, Constants.config.elevator.output_Max, ClosedLoopSlot.kSlot0);                                                                                        // Output Range Config `Slot 0`
     elevatorMotorConfig_Global.closedLoop.maxMotion                                                                                     // Global Config for Elevator MAX Motion by RevRobotics
       .maxAcceleration(Constants.config.elevator.accelerationMax, ClosedLoopSlot.kSlot0)                                                // Acceleration Mac `Slot 0`
       .maxVelocity(Constants.config.elevator.velocityMax, ClosedLoopSlot.kSlot0)                                                        // Velocity Max `Slot 0`
-      .allowedClosedLoopError(1, ClosedLoopSlot.kSlot0);                                                                                // Error Lovel `Slot 0`
+      .allowedClosedLoopError(2, ClosedLoopSlot.kSlot0);                                                                                // Error Lovel `Slot 0`
     elevatorMotorConfig_Lead.apply(elevatorMotorConfig_Global);                                                                         // Applies config from Global Config to Lead Motor Config
+    elevatorMotorConfig_Lead.encoder
+      .positionConversionFactor(Constants.config.elevator.conversionFact);
     elevatorMotorConfig_Lead.limitSwitch                                                                                                // Configuration of Limit Switches
       .forwardLimitSwitchType(Type.kNormallyOpen)                                                                                       // Sets NC or NO status of Switch
       .forwardLimitSwitchEnabled(true)                                                                                          // Enables Limit Switch
