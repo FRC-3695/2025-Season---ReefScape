@@ -114,41 +114,40 @@ public class Constants {
     public static final class sensor {
         public static final int         coralLoaded     = 0;                                                                                // Optical to catch when coral is completely loaded in manipulator
         public static final int         coralEmpty      = 1;                                                                                // Optical to catch when coral is completely unloaded in manipulator                                                                                // 
+        public static final int         algaeLoaded     = 4;                                                                                // Optical to catch when coral is completely loaded in algae manipulator
     }
     public static final class config {
         public static final class elevator {
             public static final int         stallAmp        = 50;                                                                           // Stall Amps
-            public static final int         altReltEncoder  = 8192;                                                                         // Encoder Steps per Revolution for Throughbore Encoder
-            public static final double      output_Max      = 0.5;                                                                          // Max output power range for controller
-            public static final double      output_Min      = -0.5;                                                                         // Min output power range for controller
+            public static final double      output_Max      = 0.8;                                                                          // Max output power range for controller
+            public static final double      output_Min      = -0.2;                                                                         // Min output power range for controller
             public static final double      ratioGearBox    = 6;                                                                            // Single Stage gear box with 6:1 Ratio by RevRobotics
-            public static final double      climbRatio      = 0;                                                                            // Conversion Factor
-            public static final double      PIDF_P          = 0.001;                                                                        // Proportional
+            public static final double      climbRatio      = 3;                                                                            // Conversion Factor (Gear Diameter * pi) / Gear Ratio [Chain Travel Distance = 22.5]
+            public static final double      climbCal        = 1;                                                                            // 
+            public static final double      PIDF_P          = 1.4;                                                                          // Proportional
             public static final double      PIDF_I          = 0.000;                                                                        // Integral Factor
             public static final double      PIDF_D          = 0.000;                                                                        // Derivative
-            public static final double      velocityFF      = 0.000;                                                                        // Feed-Forward
-            public static final double      velocityMax     = 6000.0;                                                                       // Max Velocity Allowed
-            public static final double      accelerationMax = 0.000;                                                                        // Max Acceleration Allowed
-            public static final double      heightAtZero    = 00.00;                                                                        // Height of coral cage at lowest point
-            public static final double      heightMax       = 00.00;                                                                        // Max travel of elevator from 0 position
-            public static final double      feeder_Height   = 00.00;                                                                        // Height required to receive coral pieces from feeder
-            public static final double      reef_L1         = 00.00;                                                                        // Height required to score Level 1 on Reef
-            public static final double      reef_L2         = 00.00;                                                                        // Height required to score Level 2 on Reef
-            public static final double      reef_L3         = 00.00;                                                                        // Height required to score Level 3 on Reef
-            public static final double      reef_L4         = 00.00;                                                                        // Height required to score Level 4 on Reef
+            public static final double      velocityFF      = (1.0 / 5767);                                                                 // Feed-Forward
+            public static final double      velocityMax     = 600.0;                                                                        // Max Velocity Allowed
+            public static final double      accelerationMax = 04.00;                                                                        // Max Acceleration Allowed
+            public static final double      heightAtZero    = 04.00;                                                                        // Height of coral cage at lowest point
+            public static final double      heightMax       = 80.00;                                                                        // Max travel of elevator from 0 position
+            public static final double      feeder_Height   = 36.00;                                                                        // Height required to receive coral pieces from feeder
+            public static final double      reef_L1         = 20.00;                                                                        // Height required to score Level 1 on Reef
+            public static final double      reef_L2         = 33.00;                                                                        // Height required to score Level 2 on Reef
+            public static final double      reef_L3         = 49.00;                                                                        // Height required to score Level 3 on Reef
+            public static final double      reef_L4         = 72.00;                                                                        // Height required to score Level 4 on Reef
+            public static final double      conversionFact  = (((3.142 * 1.888) / ratioGearBox) * climbRatio) * climbCal;                   // Serves to create the calculation for conversion factor (((PI * ChainGearSize) / Gearing) * ClimbRatio) / * Tuning
         }
         public static final class coral {
             public static final int         stallAmp        = 30;                                                                           // Stall Amps
-            public static final double      autoFeed        = -00.40;
+            public static final double      autoFeed        = -00.70;
             public static final double      autoEject       = 01.00;
         }
-
         public static final class algae {
-            public static final double      autoAlgaeFeed        = -00.40;
-            public static final double      autoAlgaeEject       = 01.00;
-            public static final double      algaeFeederMaxSpeed  = 0.8;
-            public static final double     algaeIntakeMaxSpeed   = 0.8;
-       
+            public static final int         stallAmp        = 40;                                                                           // Stall Amps
+            public static final double      autoFeed        = -00.50;
+            public static final double      autoEject       = 00.50;
         }
         public static final class visionPosition {
 
