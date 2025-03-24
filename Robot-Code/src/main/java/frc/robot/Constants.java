@@ -150,7 +150,7 @@ public class Constants {
             public static final double      autoEject       = 00.50;
             public static final double      algaeArmRatio   = 1;                                                                            // 
             public static final double      algaeArmCal     = 1;   
-            public static final double      algaeConversionFact   = (((90 / 360.0) * 100) / ratioGearBox) * algaeArmRatio * algaeArmCal;    // Calculation for the conversion factor of the Algae Arm
+            public static final double      algaeConversionFact   = (((90 / 360.0) * 100) / elevator.ratioGearBox) * algaeArmRatio * algaeArmCal;    // Calculation for the conversion factor of the Algae Arm
         }
         public static final class visionPosition {
 
