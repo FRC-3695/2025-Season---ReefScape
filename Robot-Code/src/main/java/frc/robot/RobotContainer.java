@@ -4,7 +4,9 @@
 
 package frc.robot;
 
-import frc.robot.subsystems.manipulatorSubsystem;
+import frc.robot.subsystems.algaeSubsystem;
+import frc.robot.subsystems.coralSubsystem;
+import frc.robot.subsystems.elevatorSubsystem;
 import frc.robot.subsystems.swervedrive.swerveSubsystem;
 import frc.robot.tools.utils;
 import swervelib.SwerveInputStream;
@@ -15,13 +17,17 @@ import com.pathplanner.lib.auto.NamedCommands;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 
 public class RobotContainer {
 
-  public static final swerveSubsystem drivebase = new swerveSubsystem(new File(Filesystem.getDeployDirectory(), "swerve/"+utils.RoboRIOid()));             // The robot's swerve drive subsystems and commands are defined here
-  public static final manipulatorSubsystem manipulator = new manipulatorSubsystem();
+  public static final swerveSubsystem     drivebase    = new swerveSubsystem(new File(Filesystem.getDeployDirectory(), "swerve/"+utils.RoboRIOid()));                                                  // The robot's swerve drive subsystems and commands are defined here
+  public static final coralSubsystem      coral        = new coralSubsystem();
+  public static final algaeSubsystem      algae        = new algaeSubsystem();
+  public static final elevatorSubsystem   elevator     = new elevatorSubsystem();
+  
   SwerveInputStream driveAngularVelocity = SwerveInputStream.of(                                                                        // Converts driver input into a field-relative ChassisSpeeds that is controlled by angular velocity.
     drivebase.getSwerveDrive(),
     () -> Robot.operatorDriver.getLeftY() * -1,
@@ -47,6 +53,7 @@ public class RobotContainer {
 //    Command driveSetpointGen                        = drivebase.driveWithSetpointGeneratorFieldRelative(driveDirectAngle);
 
     drivebase.setDefaultCommand(driveFieldOrientedAngularVelocity);
+    coral.setDefaultCommand(coral.idle());
 
     if (DriverStation.isTest()) {                                                                                                       // During Driver Station Test mode set controller binding to
       drivebase.setDefaultCommand(driveFieldOrientedAngularVelocity);
@@ -59,15 +66,20 @@ public class RobotContainer {
       Robot.operatorDriver.rightBumper().onTrue(Commands.none());
     } else {                                                                                                                            // During Driver Station Teleop mode set controller binding to
       Robot.operatorDriver.a().onTrue((Commands.none()));
-      Robot.operatorDriver.b().onTrue(manipulator.autoScore(2));
-      Robot.operatorDriver.b().onFalse(manipulator.idle());
-      Robot.operatorDriver.x().onTrue(manipulator.autoFeederIntake());
-      Robot.operatorDriver.x().onFalse(manipulator.idle());
-      Robot.operatorDriver.y().onTrue((Commands.runOnce(drivebase::zeroGyro)));
-      Robot.operatorDriver.start().onTrue((Commands.none()));
+      Robot.operatorDriver.b().onTrue((Commands.none()));
+      Robot.operatorDriver.b().onFalse(coral.idle());
+      Robot.operatorDriver.x().onTrue(coral.autoFeederIntake());
+      Robot.operatorDriver.x().onFalse(coral.idle());
+      Robot.operatorDriver.start().onTrue((Commands.runOnce(drivebase::zeroGyro)));
       Robot.operatorDriver.back().onTrue((Commands.none()));
       Robot.operatorDriver.leftBumper().onTrue((Commands.none()));
       Robot.operatorDriver.rightBumper().onTrue((Commands.none()));
+
+      Robot.operatorManip.b().onTrue(Commands.run(coral.autoFeederIntake(), coral));
+      Robot.operatorManip.x().onTrue(coral.autoFeederIntake());
+      Robot.operatorManip.x().onFalse(coral.idle());
+      Robot.operatorManip.y().onTrue(algae.algaeAuto());
+      Robot.operatorManip.y().onFalse(algae.idle());
     }
   }
 
@@ -78,5 +90,16 @@ public class RobotContainer {
 
   public void setMotorBrake(boolean brake) {
     drivebase.modulesBraking(brake);
+  }
+    public void dashboardUpdate() {
+    SmartDashboard.putData("subsystems/swerve/scheduled",       RobotContainer.drivebase.getCurrentCommand());
+    SmartDashboard.putData("subsystems/swerve/default",         RobotContainer.drivebase.getDefaultCommand());
+    SmartDashboard.putData("subsystems/coral/scheduled",        RobotContainer.coral.getCurrentCommand());
+    SmartDashboard.putData("subsystems/coral/default",          RobotContainer.coral.getDefaultCommand());
+    SmartDashboard.putData("subsystems/elevator/scheduled",     RobotContainer.elevator.getCurrentCommand());
+    SmartDashboard.putData("subsystems/elevator/default",       RobotContainer.elevator.getDefaultCommand());
+    SmartDashboard.putData("subsystems/algae/scheduled",        RobotContainer.algae.getCurrentCommand());
+    SmartDashboard.putData("subsystems/algae/default",          RobotContainer.algae.getDefaultCommand());
+    SmartDashboard.updateValues();
   }
 }

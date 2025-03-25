@@ -9,7 +9,7 @@ import swervelib.math.Matter;
 public class Constants {
     public static final class robot {
         public static final double ROBOT_MASS = (148 - 20.3) * 0.453592;                                                                    // 32lbs * kg per pound
-        public static final Matter CHASSIS    = new Matter(new Translation3d(0, 0, Units.inchesToMeters(8)), ROBOT_MASS);        // Frame Size
+        public static final Matter CHASSIS    = new Matter(new Translation3d(Units.inchesToMeters(30), Units.inchesToMeters(30), Units.inchesToMeters(8)), ROBOT_MASS);        // Frame Size
         public static final String cameraPosition                   = "";                                                                   // LimeLight3 Mounted to Frame
         public static final String cameraFeeder                     = "";                                                                   // LimeLight2 Mounted to Manipulator
     }
@@ -114,7 +114,8 @@ public class Constants {
     public static final class sensor {
         public static final int         coralLoaded     = 0;                                                                                // Optical to catch when coral is completely loaded in manipulator
         public static final int         coralEmpty      = 1;                                                                                // Optical to catch when coral is completely unloaded in manipulator                                                                                // 
-        public static final int         algaeLoaded     = 4;                                                                                // Optical to catch when coral is completely loaded in algae manipulator
+        public static final int         algaeLoaded     = 2;                                                                                // Optical to catch when coral is completely loaded in algae manipulator
+        public static final int         algaeZero       = 4;
     }
     public static final class config {
         public static final class elevator {
@@ -123,13 +124,13 @@ public class Constants {
             public static final double      output_Min      = -0.2;                                                                         // Min output power range for controller
             public static final double      ratioGearBox    = 6;                                                                            // Single Stage gear box with 6:1 Ratio by RevRobotics
             public static final double      climbRatio      = 3;                                                                            // Conversion Factor (Gear Diameter * pi) / Gear Ratio [Chain Travel Distance = 22.5]
-            public static final double      climbCal        = 1;                                                                            // 
-            public static final double      PIDF_P          = 1.4;                                                                          // Proportional
-            public static final double      PIDF_I          = 0.000;                                                                        // Integral Factor
+            public static final double      climbCal        = 0;                                                                            // 
+            public static final double      PIDF_P          = 1.6;                                                                          // Proportional
+            public static final double      PIDF_I          = 0.003;                                                                        // Integral Factor
             public static final double      PIDF_D          = 0.000;                                                                        // Derivative
             public static final double      velocityFF      = (1.0 / 5767);                                                                 // Feed-Forward
-            public static final double      velocityMax     = 600.0;                                                                        // Max Velocity Allowed
-            public static final double      accelerationMax = 04.00;                                                                        // Max Acceleration Allowed
+            public static final double      velocityMax     = 200.0;                                                                        // Max Velocity Allowed
+            public static final double      accelerationMax = 400.0;                                                                        // Max Acceleration Allowed
             public static final double      heightAtZero    = 04.00;                                                                        // Height of coral cage at lowest point
             public static final double      heightMax       = 80.00;                                                                        // Max travel of elevator from 0 position
             public static final double      feeder_Height   = 36.00;                                                                        // Height required to receive coral pieces from feeder
@@ -137,17 +138,25 @@ public class Constants {
             public static final double      reef_L2         = 33.00;                                                                        // Height required to score Level 2 on Reef
             public static final double      reef_L3         = 49.00;                                                                        // Height required to score Level 3 on Reef
             public static final double      reef_L4         = 72.00;                                                                        // Height required to score Level 4 on Reef
-            public static final double      conversionFact  = (((3.142 * 1.888) / ratioGearBox) * climbRatio) * climbCal;                   // Serves to create the calculation for conversion factor (((PI * ChainGearSize) / Gearing) * ClimbRatio) / * Tuning
+            public static final double      conversionFact  = (((3.142 * 1.888) / ratioGearBox) * climbRatio) + climbCal;                   // Serves to create the calculation for conversion factor (((PI * ChainGearSize) / Gearing) * ClimbRatio) / * Tuning 4.7
+            public static final double      manualSpeed     = 00.30;                                                                        // Manual Run Speed
+            public static final double      manualDeadBand  = 00.20;                                                                        // Manual Stick Dead Band
         }
         public static final class coral {
-            public static final int         stallAmp        = 30;                                                                           // Stall Amps
-            public static final double      autoFeed        = -00.70;
-            public static final double      autoEject       = 01.00;
+            public static final int         stallAmp        = 30;                                                                           //amps, Stall Amps
+            public static final int         bailAmp         = 10;                                                                           //amps, Amperage at which intake will bailout on intake attempt
+            public static final double      autoFeed        = -00.85;                                                                       //DutyCycle, Power output for auto feed sequence
+            public static final double      autoEject       =  01.00;                                                                       //DutyCycle, Power output for auto eject sequence
         }
         public static final class algae {
-            public static final int         stallAmp        = 40;                                                                           // Stall Amps
-            public static final double      autoFeed        = -00.50;
-            public static final double      autoEject       = 00.50;
+            public static final int         stallAmp        = 40;                                                                           //amps, Stall Amps
+            public static final int         maxAmpDeploy    = 6;                                                                            //amps, Max Amps to be pulled during deployment
+            public static final double      varAmpDeploy    = 00.20;                                                                        //%, of varriability for amperage pull during deploy
+            public static final double      autoFeed        = -00.60;                                                                       //DutyCycle, Power output for auto feed sequence
+            public static final double      autoFeed_TO     = 05.00;                                                                        //sec's, Timeout for auto feed to run for
+            public static final double      autoEject       = 00.50;                                                                        //DutyCycle, Power output for auto eject sequence
+            public static final double      autoEject_TO    = 04.00;                                                                        //sec's, Timeout for auto eject to run for
+            public static final double      autoDeploy_SPD  = 00.10;                                                                        //DutyCycle, Power output for auto deployment of algae manipulator to be first deployed and zero'd
         }
         public static final class visionPosition {
 
