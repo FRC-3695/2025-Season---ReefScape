@@ -137,7 +137,7 @@ public class Constants {
             public static final double      reef_L2         = 33.00;                                                                        // Height required to score Level 2 on Reef
             public static final double      reef_L3         = 49.00;                                                                        // Height required to score Level 3 on Reef
             public static final double      reef_L4         = 72.00;                                                                        // Height required to score Level 4 on Reef
-            public static final double      conversionFact  = (((3.142 * 1.888) / ratioGearBox) * climbRatio) * climbCal;                   // Serves to create the calculation for conversion factor (((PI * ChainGearSize) / Gearing) * ClimbRatio) / * Tuning
+            public static final double      conversionFact  = (((3.142 * 1.888) / ratioGearBox) * climbRatio) + climbCal;                   // Serves to create the calculation for conversion factor (((PI * ChainGearSize) / Gearing) * ClimbRatio) / * Tuning
         }
         public static final class coral {
             public static final int         stallAmp        = 30;                                                                           // Stall Amps
@@ -150,8 +150,10 @@ public class Constants {
             public static final double      autoEject       = 00.50;
             public static final double      algaeArmRatio   = 1;                                                                            // 
             public static final double      algaeArmCal     = 1;   
-            public static final double      algaeConversionFact   = (((90 / 360.0) * 100) / elevator.ratioGearBox) * algaeArmRatio * algaeArmCal;    // Calculation for the conversion factor of the Algae Arm
+           //public static final double     algaeConversionFact  = (((90 / 360.0) * 100) / elevator.ratioGearBox) * algaeArmRatio * algaeArmCal;    // Calculation for the conversion factor of the Algae Arm
+            public static final double      algaeConversionFact  = ((360.0 / 100) / elevator.ratioGearBox);
         }
+
         public static final class visionPosition {
 
         }
