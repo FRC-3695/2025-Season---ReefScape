@@ -42,6 +42,7 @@ public class Constants {
         public static final double LEFT_Y_DEADBAND  = 0.1;                                                                                  //%, Left Stick Vertical Deadband Percentage of Travel from center
         public static final double RIGHT_X_DEADBAND = 0.1;                                                                                  //%, Right Stick Horizontal Deadband Percentage of Travel from center
         public static final double RIGHT_Y_DEADBAND = 0.1;                                                                                  //%, Right Stick Vertical Deadband Percentage of Travel from center
+        public static final double Trigger_DeadBand = 0.2;                                                                                  //%, 
     }
     public static final class vision {
 
@@ -128,9 +129,9 @@ public class Constants {
             public static final double      PIDF_P          = 1.6;                                                                          // Proportional
             public static final double      PIDF_I          = 0.003;                                                                        // Integral Factor
             public static final double      PIDF_D          = 0.000;                                                                        // Derivative
-            public static final double      velocityFF      = (1.0 / 5767);                                                                 // Feed-Forward
-            public static final double      velocityMax     = 200.0;                                                                        // Max Velocity Allowed
-            public static final double      accelerationMax = 400.0;                                                                        // Max Acceleration Allowed
+            public static final double      velocityFF      = 0;                                                                            // Feed-Forward                                 Set to `0` when using position controller
+            public static final double      velocityMax     = 150.0;                                                                        // Max Velocity Allowed
+            public static final double      accelerationMax = 50.0;                                                                        // Max Acceleration Allowed
             public static final double      heightAtZero    = 04.00;                                                                        // Height of coral cage at lowest point
             public static final double      heightMax       = 80.00;                                                                        // Max travel of elevator from 0 position
             public static final double      feeder_Height   = 36.00;                                                                        // Height required to receive coral pieces from feeder

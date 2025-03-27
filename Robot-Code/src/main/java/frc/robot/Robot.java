@@ -204,6 +204,7 @@ public class Robot extends TimedRobot {
    coralMotorConfig
       .inverted(false)
       .smartCurrentLimit(Constants.config.coral.stallAmp)
+      .voltageCompensation(11.8)
       .idleMode(IdleMode.kCoast);
     coralMotor.clearFaults();
     coralMotor.configure(coralMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);

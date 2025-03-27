@@ -25,39 +25,19 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 
 public class coralSubsystem extends SubsystemBase {
-    private static Timer coral_RunTimer                                         = new Timer();
-    private static String state                                                 = null;
     // ------------------------------------------------------------------------------------    Command(s)    ------------------------------------------------------------------------------------
-    public Command idle() {                                                                                                      // Holds Parts Idle
+    public Command core() {
         return run(() ->{
-            Robot.coralMotor.set(0);
-           
         });
     }
-    public Command autoFeederIntake() {                                                                                                 // 
+    public Command manual_OR() {
         return run(() ->{
-            coral_RunTimer.reset();
-            utils.Logging(4, "Intake");
-            if (!Robot.elevatorSensor_CorLoad.get()) {
-                coral_RunTimer.start();
-                while(!Robot.elevatorSensor_CorLoad.get() && coral_RunTimer.get() < 5.0) {
-                    Robot.coralMotor.set(Constants.config.coral.autoFeed);
-                }
-                Robot.coralMotor.set(0);
-            } else if (Robot.elevatorSensor_CorLoad.get()) {
-                coral_RunTimer.start();
-                while(Robot.elevatorSensor_CorEmpty.get() && coral_RunTimer.get() < 1.5) {
-                    Robot.coralMotor.set(Constants.config.coral.autoEject);
-                }
-                Robot.coralMotor.set(0);
-            } else {
-                Robot.coralMotor.set(0);
-            }
-            coral_RunTimer.stop();
-        });
-    }
-    public Command manualScore() {                                                                                                      // Manually scores coral from coral manipulator
-        return run(() ->{
+            utils.Logging(4, "-");
+            if (!Robot.operatorManip.rightBumper().getAsBoolean()) {
+                speedAssign(Robot.operatorDriver.getLeftTriggerAxis());
+              } else {
+                speedAssign(-Robot.operatorDriver.getLeftTriggerAxis());
+              }
         });
     }
     // -----------------------------------------------------------------------------------    Periodic(s)    ------------------------------------------------------------------------------------
@@ -78,5 +58,17 @@ public class coralSubsystem extends SubsystemBase {
         SmartDashboard.updateValues();
     }
     private static void dashboardTest() {                                                                                               // Starts and Updates Values if in `Test Function`
+    }
+    public static void speedAssign(double speed) {
+        Robot.coralMotor.set(speed);
+    }
+    public static void intake() {
+        Robot.coralMotor.set(Constants.config.coral.autoFeed);
+    }
+    public static void eject() {
+        Robot.coralMotor.set(Constants.config.coral.autoEject);
+    }
+    public static void stop() {
+        Robot.coralMotor.set(0);
     }
 }

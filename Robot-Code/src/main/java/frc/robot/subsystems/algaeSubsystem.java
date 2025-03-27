@@ -21,37 +21,19 @@ import edu.wpi.first.wpilibj2.command.Commands;
 public class algaeSubsystem extends SubsystemBase {
     private static Timer algaeFeed_RunTimer                                     = new Timer();
     // ------------------------------------------------------------------------------------    Command(s)    ------------------------------------------------------------------------------------
-    public Command idle() {                                                                                                      // Holds Parts Idle
+    public Command core() {
         return run(() ->{
-            Robot.algaeMotor_Intake.set(0);
-           
+
         });
     }
-    public Command algaeAuto() {
+    public Command manual_OR() {
         return run(() ->{
-            utils.Logging(4, "Algae Auto");
-            algaeFeed_RunTimer.reset();
-            if (!Robot.algaeSensor_Capture.get()) {
-                algaeFeed_RunTimer.start();
-                while(!Robot.algaeSensor_Capture.get() && algaeFeed_RunTimer.get() <= Constants.config.algae.autoFeed_TO) {
-                    utils.Logging(4, "Algae Auto - Intake");
-                    Robot.algaeMotor_Intake.set(Constants.config.algae.autoFeed);
-                    utils.Logging(2, "Algae Auto - Speed :" + Robot.algaeMotor_Intake.get());
-                }
-            } else if (Robot.algaeSensor_Capture.get()) {
-                algaeFeed_RunTimer.start();
-                while(algaeFeed_RunTimer.get() <= Constants.config.algae.autoEject_TO) {
-                    Robot.algaeMotor_Intake.set(Constants.config.algae.autoEject);
-                }
+            utils.Logging(4, "-");
+            if (!Robot.operatorManip.leftBumper().getAsBoolean()) {
+            speedAsign(Robot.operatorManip.getLeftTriggerAxis());
             } else {
-                Robot.algaeMotor_Intake.set(0);
+            speedAsign(-Robot.operatorManip.getLeftTriggerAxis());
             }
-            Robot.algaeMotor_Intake.set(0);
-            algaeFeed_RunTimer.stop();
-        });
-    }
-    public Command algaeFeed(double motionFeed) {                                                                                                       // Manually feeds coral into coral manipulator
-        return run(() ->{
         });
     }
     // -----------------------------------------------------------------------------------    Periodic(s)    ------------------------------------------------------------------------------------
@@ -94,5 +76,17 @@ public class algaeSubsystem extends SubsystemBase {
             }
         }
         Robot.algaeMotor_Position.set(0);
+    }
+    public static void speedAsign(double speed) {
+        Robot.algaeMotor_Intake.set(speed);
+    }
+    public static void intake() {
+        Robot.algaeMotor_Intake.set(Constants.config.algae.autoFeed);
+    }
+    public static void eject() {
+        Robot.algaeMotor_Intake.set(Constants.config.algae.autoEject);
+    }
+    public static void stop() {
+        Robot.algaeMotor_Intake.set(0);
     }
 }

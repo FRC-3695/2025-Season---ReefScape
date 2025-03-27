@@ -4,6 +4,11 @@
 
 package frc.robot;
 
+import frc.robot.commands.manipulators.AlgaeAutoFeed;
+import frc.robot.commands.manipulators.AlgaeManual_OR;
+import frc.robot.commands.manipulators.CoralAutoFeed;
+import frc.robot.commands.manipulators.CoralManual_OR;
+import frc.robot.commands.manipulators.Manual_OR;
 import frc.robot.subsystems.algaeSubsystem;
 import frc.robot.subsystems.coralSubsystem;
 import frc.robot.subsystems.elevatorSubsystem;
@@ -27,6 +32,7 @@ public class RobotContainer {
   public static final coralSubsystem      coral        = new coralSubsystem();
   public static final algaeSubsystem      algae        = new algaeSubsystem();
   public static final elevatorSubsystem   elevator     = new elevatorSubsystem();
+  private static      Boolean             manipManual  = true;
   
   SwerveInputStream driveAngularVelocity = SwerveInputStream.of(                                                                        // Converts driver input into a field-relative ChassisSpeeds that is controlled by angular velocity.
     drivebase.getSwerveDrive(),
@@ -53,7 +59,6 @@ public class RobotContainer {
 //    Command driveSetpointGen                        = drivebase.driveWithSetpointGeneratorFieldRelative(driveDirectAngle);
 
     drivebase.setDefaultCommand(driveFieldOrientedAngularVelocity);
-    coral.setDefaultCommand(coral.idle());
 
     if (DriverStation.isTest()) {                                                                                                       // During Driver Station Test mode set controller binding to
       drivebase.setDefaultCommand(driveFieldOrientedAngularVelocity);
@@ -67,30 +72,32 @@ public class RobotContainer {
     } else {                                                                                                                            // During Driver Station Teleop mode set controller binding to
       Robot.operatorDriver.a().onTrue((Commands.none()));
       Robot.operatorDriver.b().onTrue((Commands.none()));
-      Robot.operatorDriver.b().onFalse(coral.idle());
-      Robot.operatorDriver.x().onTrue(coral.autoFeederIntake());
-      Robot.operatorDriver.x().onFalse(coral.idle());
+      Robot.operatorDriver.x().onTrue((Commands.none()));
       Robot.operatorDriver.start().onTrue((Commands.runOnce(drivebase::zeroGyro)));
       Robot.operatorDriver.back().onTrue((Commands.none()));
       Robot.operatorDriver.leftBumper().onTrue((Commands.none()));
       Robot.operatorDriver.rightBumper().onTrue((Commands.none()));
+      
+      elevator.setDefaultCommand(elevator.core());
+      Robot.operatorManip.x().onTrue(new CoralAutoFeed(coral));
+      Robot.operatorManip.y().onTrue(new AlgaeAutoFeed(algae));
+      
+      Robot.operatorManip.start()
+        .onTrue(new Manual_OR())
+        .debounce(.125)
+        .onTrue(driveFieldOrientedAngularVelocity);
 
-      Robot.operatorManip.b().onTrue(Commands.run(coral.autoFeederIntake(), coral));
-      Robot.operatorManip.x().onTrue(coral.autoFeederIntake());
-      Robot.operatorManip.x().onFalse(coral.idle());
-      Robot.operatorManip.y().onTrue(algae.algaeAuto());
-      Robot.operatorManip.y().onFalse(algae.idle());
+      manipManual();
     }
   }
-
   public Command getAutonomousCommand() {
     return Commands.print("No autonomous command configured");
   }
   // -------------------------------------------------------------------------------//    Auto Pass Through    //--------------------------------------------------------------------------------
-
   public void setMotorBrake(boolean brake) {
     drivebase.modulesBraking(brake);
   }
+  // -----------------------------------------------------------------------------------//    Functions    //------------------------------------------------------------------------------------
     public void dashboardUpdate() {
     SmartDashboard.putData("subsystems/swerve/scheduled",       RobotContainer.drivebase.getCurrentCommand());
     SmartDashboard.putData("subsystems/swerve/default",         RobotContainer.drivebase.getDefaultCommand());
@@ -101,5 +108,19 @@ public class RobotContainer {
     SmartDashboard.putData("subsystems/algae/scheduled",        RobotContainer.algae.getCurrentCommand());
     SmartDashboard.putData("subsystems/algae/default",          RobotContainer.algae.getDefaultCommand());
     SmartDashboard.updateValues();
+  }
+
+  public static void manipManual() {
+    utils.Logging(4, "Swapped Operator to Manual");
+    manipManual ^= true;
+    if (!manipManual) {
+      elevator.manual_OR();
+      algae.core();
+      ;coral.core();
+    } else {
+      elevator.manual_OR();
+      algae.manual_OR();
+      coral.manual_OR();
+    }
   }
 }

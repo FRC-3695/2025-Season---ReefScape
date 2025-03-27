@@ -23,41 +23,40 @@ public class elevatorSubsystem extends SubsystemBase {
     private static int elevatorZero                                             = 0;                                                    // {@param elevatorZero_Count} ++ for every zero reset
     private static SparkClosedLoopController elevatorMotionController           = Robot.elevatorMotor_Lead.getClosedLoopController();   // Retrievs Rev MaxMotion Closed Loop Controller                   
     // ------------------------------------------------------------------------------------    Command(s)    ------------------------------------------------------------------------------------
-    public Command idle() {                                                                                                      // Holds Parts Idle
+    public Command core() {
         return run(() ->{
-            Robot.elevatorMotor_Lead.set(0);
-           
+            elevatorManual();
+        });
+    }
+    public Command manual_OR() {
+        return run(() ->{
+            elevatorManual();
         });
     }
     public Command autoScore(int level) {                                                                                               // 
         return run(() ->{
-            utils.Logging(4, "Elevator Floor: "+level);
+            utils.Logging(1, "Elevator Run to Level: "+level);
             switch (level) {
                 case 1:                                                                                                                 // 
                     runToTarget(Constants.config.elevator.reef_L1);
-                    utils.Logging(3, "Height: "+ (Constants.config.elevator.reef_L1 - Constants.config.elevator.heightAtZero));
+                    utils.Logging(0, "Height: "+ Constants.config.elevator.reef_L1);
                     break;
                 case 2:                                                                                                                 // 
                     runToTarget(Constants.config.elevator.reef_L2);
-                    utils.Logging(3, "Height: "+ (Constants.config.elevator.reef_L2 - Constants.config.elevator.heightAtZero));
+                    utils.Logging(0, "Height: "+ Constants.config.elevator.reef_L2);
                     break;
                 case 3:                                                                                                                 // 
                     runToTarget(Constants.config.elevator.reef_L3);
-                    utils.Logging(3, "Height: "+ (Constants.config.elevator.reef_L3 - Constants.config.elevator.heightAtZero));
+                    utils.Logging(0, "Height: "+ Constants.config.elevator.reef_L3);
                     break;
                 case 4:                                                                                                                 // 
                     runToTarget(Constants.config.elevator.reef_L4);
-                    utils.Logging(3, "Height: "+ (Constants.config.elevator.reef_L4 - Constants.config.elevator.heightAtZero));
+                    utils.Logging(0, "Height: "+ Constants.config.elevator.reef_L4);
                     break;
                 default:                                                                                                                // 
                     runToTarget(0);
                     break;
             }
-        });
-    }
-    public Command manualElevator(double input) {                                                                                                 // Manually raises elevator
-        return run(() ->{
-            utils.Logging(4, "Elevator Manual Power:"+input);
         });
     }
     // -----------------------------------------------------------------------------------    Periodic(s)    ------------------------------------------------------------------------------------
@@ -71,7 +70,6 @@ public class elevatorSubsystem extends SubsystemBase {
             dashboardTest();
         }
         encoderZero();
-        elevatorManual();
     }
     // ------------------------------------------------------------------------------------    Functions    -------------------------------------------------------------------------------------
     private static void dashboardUpdate() {                                                                                             // Updates Dashboard Data
@@ -81,6 +79,12 @@ public class elevatorSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("manipulator/elevator/zeroingEvents", elevatorZero);                                                           // Count of times zeroing has occured
         SmartDashboard.putBoolean("manipulator/elevator/sensor/Max", Robot.elevatorSensor_Max.isPressed());
         SmartDashboard.putBoolean("manipulator/elevator/sensor/Zero", Robot.elevatorSensor_Zero.isPressed());
+        SmartDashboard.putBoolean("manipulator/elevator/level/1", Robot.elevatorEncoder_Lead.getPosition() > 5.025 && Robot.elevatorEncoder_Lead.getPosition() < 5.625 ? true : false);
+        SmartDashboard.putBoolean("manipulator/elevator/level/2", Robot.elevatorEncoder_Lead.getPosition() > 16.160 && Robot.elevatorEncoder_Lead.getPosition() < 18.160 ? true : false);
+        SmartDashboard.putBoolean("manipulator/elevator/level/3", Robot.elevatorEncoder_Lead.getPosition() > 30.033 && Robot.elevatorEncoder_Lead.getPosition() < 34.533 ? true : false);
+        SmartDashboard.putBoolean("manipulator/elevator/level/4", Robot.elevatorEncoder_Lead.getPosition() > 58.922 && Robot.elevatorEncoder_Lead.getPosition() < 60.122 ? true : false);
+        SmartDashboard.putBoolean("manipulator/elevator/level/Feeder", Robot.elevatorEncoder_Lead.getPosition() > 23.383 && Robot.elevatorEncoder_Lead.getPosition() < 23.787 ? true : false);
+        SmartDashboard.putBoolean("manipulator/elevator/level/FeederRise", Robot.elevatorEncoder_Lead.getPosition() > 25.500 && Robot.elevatorEncoder_Lead.getPosition() < 27.683 ? true : false);
         SmartDashboard.updateValues();
 
     }
@@ -115,9 +119,20 @@ public class elevatorSubsystem extends SubsystemBase {
             } else if (!Robot.elevatorSensor_Max.isPressed() && -Robot.operatorManip.getLeftY() >= 0) {
                 Robot.elevatorMotor_Lead.set((Constants.config.elevator.manualSpeed * -Robot.operatorManip.getLeftY()));
             }
-            utils.Logging(4, "Elevator Manual Power:"+Robot.elevatorMotor_Lead.get());
         }  else {
             Robot.elevatorMotor_Lead.set(0);
         }
+    }
+    public static boolean freeRun(double rate) {                                                                                        // Gives the ability to drive the elevator free from all logic with limit switch protection still in place and reporting
+        if (rate > 0 && !Robot.elevatorSensor_Zero.isPressed()) {
+            Robot.elevatorMotor_Lead.set(rate);
+            return false;                                                                                                               // Reports that no limit or error has occured
+        } else if (rate < 0 && !Robot.elevatorSensor_Max.isPressed()) {
+            Robot.elevatorMotor_Lead.set(rate);
+            return false;
+        } else {
+            Robot.elevatorMotor_Lead.set(0);
+            return true;                                                                                                                // Reports that a limit or error has occured
+        }                                                                                                                   
     }
 }
