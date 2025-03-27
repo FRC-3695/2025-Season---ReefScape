@@ -1,24 +1,12 @@
 package frc.robot.subsystems;
 import frc.robot.Constants;
 import frc.robot.Robot;
-import frc.robot.Constants.operatorDriver;
-import frc.robot.Constants.operatorManip;
 import frc.robot.tools.utils;
 
-import com.revrobotics.spark.SparkClosedLoopController;
-import com.revrobotics.spark.ClosedLoopSlot;
-import com.revrobotics.spark.SparkBase.ControlType;
-
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardComponent;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
-import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 
 
