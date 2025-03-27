@@ -1,15 +1,14 @@
 package frc.robot.tools;
 import java.text.DecimalFormat;
 
-import com.acidmanic.consoletools.terminal.Terminal;
-
 //WPILib Libraries
 import edu.wpi.first.hal.HALUtil;
+import edu.wpi.first.wpilibj.DriverStation;
 import frc.robot.BuildConstants;
 
 public class utils {
+    private static boolean debug = false;                                                                                               // enables or disables debug printing
     private static double lastTripRisk;
-    private static Terminal Console = new Terminal();
     private utils() {}
     // ------------------------------------------------------------------------------------------    Math    ------------------------------------------------------------------------------------------
     public static double map(double x, double in_min, double in_max, double out_min, double out_max) {
@@ -18,55 +17,73 @@ public class utils {
     // ----------------------------------------------------------------------------------------    Logging    -----------------------------------------------------------------------------------------
     static DecimalFormat ft = new DecimalFormat("###0000.000"); 
     public static void Logging(int level, String event) {
-        System.out.print("*** ");
         double time = HALUtil.getFPGATime();
         time = time/1000000;
-        System.out.print(ft.format(time));
         switch (level) {
             case 0:
-                Console.setScreenAttributes(Terminal.Constants.FOREGROUND_MAGENTA, Terminal.Constants.BACKGROUND_BLACK);
-                System.out.print(" - Debug - ");
+                if (debug) {
+                    System.out.print("*** ");
+                    System.out.print(ft.format(time));
+                    System.out.print(" - Debug - ");
+                    System.out.println(event);
+                }
+                
                 break;
             case 1:
-                Console.setScreenAttributes(Terminal.Constants.FOREGROUND_BLUE, Terminal.Constants.BACKGROUND_BLACK);
+                System.out.print("*** ");
+                System.out.print(ft.format(time));
                 System.out.print(" - Info - ");
+                System.out.println(event);
                 break;
             case 2:
-                Console.setScreenAttributes(Terminal.Constants.FOREGROUND_MAGENTA, Terminal.Constants.BACKGROUND_BLACK);
+                System.out.print("*** ");
+                System.out.print(ft.format(time));
                 System.out.print(" - Error - ");
+                System.out.println(event);
                 break;
             case 3:
-                Console.setScreenAttributes(Terminal.Constants.FOREGROUND_YELLOW, Terminal.Constants.BACKGROUND_BLACK);
+                System.out.print("*** ");
+                System.out.print(ft.format(time));
                 System.out.print(" - ! Alert ! - ");
+                System.out.println(event);
                 break;
             case 4:
-                Console.setScreenAttributes(Terminal.Constants.FOREGROUND_RED, Terminal.Constants.BACKGROUND_BLACK);
+                System.out.print("*** ");
+                System.out.print(ft.format(time));
                 System.out.print(" - (/) Warning (/) - ");
+                System.out.println(event);
                 break;
             case 5:
-                Console.setScreenAttributes(Terminal.Constants.FOREGROUND_BLACK, Terminal.Constants.BACKGROUND_RED);
+                System.out.print("*** ");
+                System.out.print(ft.format(time));
                 System.out.print(" - </> Critical </> - ");
+                System.out.println(event);
                 break;
             default:
+                System.out.print("*** ");
+                System.out.print(ft.format(time));
+                System.out.println(event);
                 break;
         }
-        Console.setScreenAttributes(Terminal.Constants.FOREGROUND_MAGENTA, Terminal.Constants.BACKGROUND_BLACK);
-        System.out.println(event);
+    }
+    public static void debugEnable(boolean debugTerminalOut) {                                                                          // Function to call for the enablement of debug looging out
+        if (debugTerminalOut) {
+            debug = true;
+        } else {
+            debug = false;
+        }
     }
     // ----------------------------------------------------------------------------------------    GitData    -----------------------------------------------------------------------------------------
     public static void GitInfo() {
-        Console.setScreenAttributes(Terminal.Constants.FOREGROUND_MAGENTA, Terminal.Constants.BACKGROUND_BLACK);
         System.out.println("|");
         System.out.println("****************************************************");
         System.out.println("Build Branch: "+ BuildConstants.MAVEN_NAME);
         System.out.println("GIT Revision: "+ BuildConstants.GIT_REVISION);
         System.out.println("Built on: "+ BuildConstants.BUILD_DATE + " @ " + BuildConstants.BUILD_UNIX_TIME);
         System.out.println("GIT_SHA: "+ BuildConstants.GIT_SHA);
-        if(BuildConstants.DIRTY != 0) {       
-            Console.setScreenAttributes(Terminal.Constants.FOREGROUND_RED, Terminal.Constants.BACKGROUND_BLACK);                                                                                                                                    // Warning of uncommited changes in deployed build
-            System.out.println("|\n****************************************************\n****************************************************\n    ********** Fruit of the Poisonous Tree *************");
+        if(BuildConstants.DIRTY != 0) {                                                                                                                                           // Warning of uncommited changes in deployed build
+            System.out.println("|\n****************************************************\n****************************************************\n    ********** Fruit of the Poisonous Tree **********    ");
         }
-        Console.setScreenAttributes(Terminal.Constants.FOREGROUND_MAGENTA, Terminal.Constants.BACKGROUND_BLACK);
         System.out.println("****************************************************");
         System.out.println("|");
     }
@@ -79,7 +96,7 @@ public class utils {
                 return "Comp_Bot-2023";
             case "031b5237":
                 return "devBot2024";
-            case "1":
+            case "0322389A":
                 return "compBot2024";
             case "32238c5":
                 return "Caroline_Rogue-One";
